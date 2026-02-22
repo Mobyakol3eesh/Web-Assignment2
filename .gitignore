@@ -1,0 +1,38 @@
+
+bin/
+obj/
+out/
+build/
+publish/
+
+# User secrets
+appsettings.json
+appsettings.Production.json
+appsettings.Development.json
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Visual Studio for Mac
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# Node.js dependencies
+node_modules/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# JetBrains Rider
+.idea/
+
+# Temporary ASP.NET Files
+~$*
