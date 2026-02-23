@@ -1,0 +1,13 @@
+@model IEnumerable<Player>
+
+<h2>Player List</h2>
+
+@foreach (Player player in Model)
+{
+    <div>
+        <h3>@player.Name</h3>
+        <p><strong>Market Value:</strong> @player.MarketValue</p>
+        <p><strong>Team ID:</strong> @(player.TeamId.HasValue ? player.TeamId.ToString() : "No Team")</p>
+        <a href="/Player/Details/@player.Id">View Player Details</a>
+    </div>
+}

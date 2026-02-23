@@ -1,0 +1,7 @@
+@model Player
+<h2>Player Details</h2>
+<div>
+    <h3>@Model.Name</h3>
+    <p><strong>Market Value:</strong> @Model.MarketValue</p>
+    <p><strong>Team:</strong> @(Model.TeamId.HasValue ? Model.TeamId.ToString() : "No Team")</p>
+</div>
