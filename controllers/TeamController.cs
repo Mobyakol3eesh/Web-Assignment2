@@ -12,12 +12,19 @@ public class TeamController : Controller
     }
 
     [HttpGet("teams/MVP/{teamId}")]
-    public async Task<ActionResult<Player>> GetMostValuablePlayerInTeam(int teamId)
+    public async Task<ActionResult<PlayerReadDto>> GetMostValuablePlayerInTeam(int teamId)
     {
         try
         {
             var mostValuablePlayer = await teamService.GetMostValuablePlayerinTeam(teamId);
-            return Ok(mostValuablePlayer);
+            var dto = new PlayerReadDto
+            {
+                Id = mostValuablePlayer.Id,
+                Name = mostValuablePlayer.Name,
+                MarketValue = mostValuablePlayer.MarketValue,
+                TeamId = mostValuablePlayer.TeamId
+            };
+            return Ok(dto);
         }
         catch (Exception ex)
         {
@@ -25,12 +32,25 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams/{id}")]
-    public async Task<ActionResult<Team>> GetTeamDetailsById(int id)
+    public async Task<ActionResult<TeamReadDto>> GetTeamDetailsById(int id)
     {
         try
         {
             var team = await teamService.GetTeamDetailsById(id);
-            return Ok(team);
+            var dto = new TeamReadDto
+            {
+                Id = team.Id,
+                Name = team.Name,
+                Points = team.Points,
+                Players = team.Players.Select(p => new PlayerReadDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    MarketValue = p.MarketValue,
+                    TeamId = p.TeamId
+                }).ToList()
+            };
+            return Ok(dto);
         }
         catch (Exception ex)
         {
@@ -38,12 +58,19 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams/teamplayers/{teamId}")]
-    public async Task<ActionResult<IEnumerable<Player>>> GetAllTeamPlayers(int teamId)
+    public async Task<ActionResult<IEnumerable<PlayerReadDto>>> GetAllTeamPlayers(int teamId)
     {
         try
         {
             var players = await teamService.GetALLTeamPlayers(teamId);
-            return Ok(players);
+            var dtos = players.Select(p => new PlayerReadDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                MarketValue = p.MarketValue,
+                TeamId = p.TeamId
+            });
+            return Ok(dtos);
         }
         catch (Exception ex)
         {
@@ -51,10 +78,23 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams")]
-    public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams()
+    public async Task<ActionResult<IEnumerable<TeamReadDto>>> GetAllTeams()
     {
         var teams = await teamService.GetAllTeams();
-        return Ok(teams);
+        var dtos = teams.Select(t => new TeamReadDto
+        {
+            Id = t.Id,
+            Name = t.Name,
+            Points = t.Points,
+            Players = t.Players?.Select(p => new PlayerReadDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                MarketValue = p.MarketValue,
+                TeamId = p.TeamId
+            }).ToList() ?? new List<PlayerReadDto>()
+        });
+        return Ok(dtos);
     }
     public async Task<IActionResult> Index()
     {

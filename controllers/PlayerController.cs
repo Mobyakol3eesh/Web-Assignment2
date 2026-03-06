@@ -12,19 +12,33 @@ public class PlayerController : Controller
     }
 
     [HttpGet("players")]
-    public async Task<ActionResult<IEnumerable<Player>>> GetAllPlayers()
+    public async Task<ActionResult<IEnumerable<PlayerReadDto>>> GetAllPlayers()
     {
         var players = await playerService.GetAllPlayers();
-        return Ok(players);
+        var dtos = players.Select(p => new PlayerReadDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            MarketValue = p.MarketValue,
+            TeamId = p.TeamId
+        });
+        return Ok(dtos);
     }
 
     [HttpGet("players/{id}")]
-    public async Task<ActionResult<Player>> GetPlayerDetailsById(int id)
+    public async Task<ActionResult<PlayerReadDto>> GetPlayerDetailsById(int id)
     {
         try
         {
             var player = await playerService.GetPlayerDetailsById(id);
-            return Ok(player);
+            var dto = new PlayerReadDto
+            {
+                Id = player.Id,
+                Name = player.Name,
+                MarketValue = player.MarketValue,
+                TeamId = player.TeamId
+            };
+            return Ok(dto);
         }
         catch (Exception ex)
         {
@@ -33,11 +47,11 @@ public class PlayerController : Controller
 
     }
     [HttpPost("players")]
-    public async Task<ActionResult> AddPlayer([FromBody] Player player)
+    public async Task<ActionResult> AddPlayer([FromBody] CreatePlayerDto dto)
     {
         try
         {
-            await playerService.AddPlayer(player.Name, player.MarketValue, player.TeamId);
+            await playerService.AddPlayer(dto.Name, dto.MarketValue, dto.TeamId);
             return Ok("Player added successfully.");
         }
         catch (Exception ex)
