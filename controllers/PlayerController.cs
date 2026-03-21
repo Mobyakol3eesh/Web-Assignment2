@@ -15,14 +15,7 @@ public class PlayerController : Controller
     public async Task<ActionResult<IEnumerable<PlayerReadDto>>> GetAllPlayers()
     {
         var players = await playerService.GetAllPlayers();
-        var dtos = players.Select(p => new PlayerReadDto
-        {
-            Id = p.Id,
-            Name = p.Name,
-            MarketValue = p.MarketValue,
-            TeamId = p.TeamId
-        });
-        return Ok(dtos);
+        return Ok(players);
     }
 
     [HttpGet("players/{id}")]
@@ -31,14 +24,7 @@ public class PlayerController : Controller
         try
         {
             var player = await playerService.GetPlayerDetailsById(id);
-            var dto = new PlayerReadDto
-            {
-                Id = player.Id,
-                Name = player.Name,
-                MarketValue = player.MarketValue,
-                TeamId = player.TeamId
-            };
-            return Ok(dto);
+            return Ok(player);
         }
         catch (Exception ex)
         {
@@ -51,7 +37,7 @@ public class PlayerController : Controller
     {
         try
         {
-            await playerService.AddPlayer(dto.Name, dto.MarketValue, dto.TeamId);
+            await playerService.AddPlayerAsync(dto);
             return Ok("Player added successfully.");
         }
         catch (Exception ex)

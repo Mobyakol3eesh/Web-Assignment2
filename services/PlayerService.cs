@@ -1,43 +1,71 @@
 
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
+
 
 public class PlayerService : IPlayerService
 {
     
     
 
-   FootballContext footballContext;
-    public PlayerService(FootballContext footballContext)
+   TunaLeagueContext tunaLeagueContext;
+    public PlayerService(TunaLeagueContext tunaLeagueContext)
     {
-        this.footballContext = footballContext;
+        this.tunaLeagueContext = tunaLeagueContext;
     }
-    public async Task<Player> GetPlayerDetailsById(int id)
+    public async Task<PlayerReadDto> GetPlayerDetailsById(int id)
     {
-        var player = await footballContext.players.Where(p => p.Id == id).FirstOrDefaultAsync();
-        if (player == null)
+        var player = await tunaLeagueContext.Players.AsNoTracking()
+       
+        .Select(p => new PlayerReadDto
         {
-            throw new Exception($"Player with ID {id} not found.");
-        }
-        return player;
+            Id = p.Id,
+            Name = p.Name,
+            MarketValue = p.MarketValue,
+            TeamReadDto = 
+                 new TeamReadDto
+                {
+                    Id = p.Team.Id,
+                    Name = p.Team.Name,
+                    Points = p.Team.Points
+                }
+        }).FirstOrDefaultAsync(p => p.Id == id);
+        return player ?? throw new Exception("Player not found");
     }
-    public async Task AddPlayer(String name, int marketValue, int? teamID)
+    public async Task AddPlayerAsync(CreatePlayerDto dto)
     {
         var newPlayer = new Player
         {
-            Id = footballContext.players.Max(p => p.Id) + 1,
-            Name = name,
-            MarketValue = marketValue,
-            TeamId = teamID
+            Id = tunaLeagueContext.Players.Max(p => p.Id) + 1,
+            Name = dto.Name,
+            MarketValue = dto.MarketValue,
+            TeamId = dto.TeamId,
         };
-        footballContext.players.Add(newPlayer);
-        await footballContext.SaveChangesAsync();
+        tunaLeagueContext.Players.Add(newPlayer);
+        await tunaLeagueContext.SaveChangesAsync();
     }
    
 
-    public async Task<IEnumerable<Player>> GetAllPlayers()
+    public async Task<IEnumerable<PlayerReadDto>> GetAllPlayers()
     {
-        return await footballContext.players.ToListAsync();
+        var Players = await tunaLeagueContext.Players
+        .AsNoTracking()
+        .Select(p => new PlayerReadDto
+                     
+                 
+         {
+             Id = p.Id,
+             Name = p.Name,
+             MarketValue = p.MarketValue,
+             TeamReadDto =  new TeamReadDto
+                 {
+                     Id = p.Team.Id,
+                     Name = p.Team.Name,
+                     Points = p.Team.Points
+                 }
+         }
+         ).ToListAsync();
+        return Players;
     }
 }
 

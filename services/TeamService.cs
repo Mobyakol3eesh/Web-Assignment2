@@ -6,31 +6,33 @@ public class TeamService : ITeamService
    
     
     
-    FootballContext footballContext;
-    public TeamService(FootballContext footballContext)
+    private readonly TunaLeagueContext tunaLeagueContext;
+    public TeamService(TunaLeagueContext tunaLeagueContext)
     {
         
-        this.footballContext = footballContext;
+        this.tunaLeagueContext = tunaLeagueContext;
 
         
     }
 
     public async Task<IEnumerable<Team>> GetAllTeams()
     {
-        return await footballContext.teams.Include(t => t.Players).ToListAsync();
+        return await tunaLeagueContext.Teams.AsNoTracking().ToListAsync();
     }
 
 
     public async Task<IEnumerable<Player>> GetALLTeamPlayers(int teamId)
     {
-        return await footballContext.players.Where(p => p.TeamId == teamId).ToListAsync();
+        return await tunaLeagueContext.Players.AsNoTracking().Where(p => p.TeamId == teamId).ToListAsync();
        
     }
     
     
     public async Task<Team> GetTeamDetailsById(int id)
     {
-        var team = await footballContext.teams.Where(t => t.Id == id).Include(t => t.Players).FirstOrDefaultAsync();
+        var team = await tunaLeagueContext.Teams
+            .AsNoTracking()
+            .FirstOrDefaultAsync(t => t.Id == id);
         if (team == null)
         {
             throw new Exception($"Team with ID {id} not found.");
@@ -40,12 +42,21 @@ public class TeamService : ITeamService
 
     public async Task<Player> GetMostValuablePlayerinTeam(int teamID)
     {
-        var team = await footballContext.teams.Where(t => t.Id == teamID).Include(t => t.Players).FirstOrDefaultAsync();
-        if (team == null)
+        var teamExists = await tunaLeagueContext.Teams
+            .AsNoTracking()
+            .AnyAsync(t => t.Id == teamID);
+
+        if (!teamExists)
         {
             throw new Exception($"Team with ID {teamID} not found.");
         }
-        var mostValuablePlayer = team.Players.OrderByDescending(p => p.MarketValue).FirstOrDefault();
+
+        var mostValuablePlayer = await tunaLeagueContext.Players
+            .AsNoTracking()
+            .Where(p => p.TeamId == teamID)
+            .OrderByDescending(p => p.MarketValue)
+            .FirstOrDefaultAsync();
+
         if (mostValuablePlayer == null)
         {
             throw new Exception($"No players found in Team with ID {teamID}.");

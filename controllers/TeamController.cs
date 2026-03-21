@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class TeamController : Controller
 {
-    private ITeamService teamService;
+    private readonly ITeamService teamService;
 
     public TeamController(ITeamService teamService)
     {
@@ -22,7 +22,12 @@ public class TeamController : Controller
                 Id = mostValuablePlayer.Id,
                 Name = mostValuablePlayer.Name,
                 MarketValue = mostValuablePlayer.MarketValue,
-                TeamId = mostValuablePlayer.TeamId
+                TeamReadDto = new TeamReadDto
+                {
+                    Id = mostValuablePlayer.TeamId,
+                    Name = string.Empty,
+                    Points = null
+                }
             };
             return Ok(dto);
         }
@@ -41,14 +46,7 @@ public class TeamController : Controller
             {
                 Id = team.Id,
                 Name = team.Name,
-                Points = team.Points,
-                Players = team.Players.Select(p => new PlayerReadDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    MarketValue = p.MarketValue,
-                    TeamId = p.TeamId
-                }).ToList()
+                Points = team.Points
             };
             return Ok(dto);
         }
@@ -68,7 +66,12 @@ public class TeamController : Controller
                 Id = p.Id,
                 Name = p.Name,
                 MarketValue = p.MarketValue,
-                TeamId = p.TeamId
+                TeamReadDto = new TeamReadDto
+                {
+                    Id = p.TeamId,
+                    Name = string.Empty,
+                    Points = null
+                }
             });
             return Ok(dtos);
         }
@@ -85,14 +88,7 @@ public class TeamController : Controller
         {
             Id = t.Id,
             Name = t.Name,
-            Points = t.Points,
-            Players = t.Players?.Select(p => new PlayerReadDto
-            {
-                Id = p.Id,
-                Name = p.Name,
-                MarketValue = p.MarketValue,
-                TeamId = p.TeamId
-            }).ToList() ?? new List<PlayerReadDto>()
+            Points = t.Points
         });
         return Ok(dtos);
     }

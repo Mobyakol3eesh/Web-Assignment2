@@ -4,9 +4,9 @@
 public interface IPlayerService
 {
    
-    Task<IEnumerable<Player>> GetAllPlayers();
-    Task<Player> GetPlayerDetailsById(int id);
+    Task<IEnumerable<PlayerReadDto>> GetAllPlayers();
+    Task<PlayerReadDto> GetPlayerDetailsById(int id);
 
-    Task AddPlayer(String name, int marketValue, int? teamID);
+    Task AddPlayerAsync(CreatePlayerDto dto);
 
 }

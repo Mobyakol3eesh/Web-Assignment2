@@ -15,7 +15,7 @@ var connBuilder = new MySqlConnector.MySqlConnectionStringBuilder(baseConnection
 
 var connectionString = connBuilder.ConnectionString;
 
-builder.Services.AddDbContext<FootballContext>(options =>
+builder.Services.AddDbContext<TunaLeagueContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddControllersWithViews();
 
