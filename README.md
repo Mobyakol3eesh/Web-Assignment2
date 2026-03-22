@@ -68,6 +68,12 @@ dotnet run
 - http://localhost:5095/swagger
 - https://localhost:7070/swagger
 
+## API Endpoint Documentation
+
+For a full endpoint reference (routes, methods, auth requirements, and request body examples), see:
+
+- [docs/API_ENDPOINTS.md](docs/API_ENDPOINTS.md)
+
 ## Authentication
 
 Login endpoint:
