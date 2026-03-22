@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>web_assignment</RootNamespace>
+    <RootNamespace>Tuna_SoccerLeague</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
