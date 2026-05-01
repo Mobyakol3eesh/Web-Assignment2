@@ -1,0 +1,162 @@
+[
+  {
+    "Id": 1,
+    "Name": "Marco Johnson",
+    "Age": 33,
+    "ExperienceYrs": 18,
+    "TeamId": 1,
+    "TeamName": "Red Tigers"
+  },
+  {
+    "Id": 2,
+    "Name": "Carlos Miller",
+    "Age": 61,
+    "ExperienceYrs": 10,
+    "TeamId": 2,
+    "TeamName": "Blue Eagles"
+  },
+  {
+    "Id": 3,
+    "Name": "Diego Smith",
+    "Age": 67,
+    "ExperienceYrs": 15,
+    "TeamId": 3,
+    "TeamName": "Green Sharks"
+  },
+  {
+    "Id": 4,
+    "Name": "Roberto Taylor",
+    "Age": 34,
+    "ExperienceYrs": 6,
+    "TeamId": 4,
+    "TeamName": "Golden Wolves"
+  },
+  {
+    "Id": 5,
+    "Name": "Anna Davis",
+    "Age": 58,
+    "ExperienceYrs": 16,
+    "TeamId": 5,
+    "TeamName": "Silver Lions"
+  },
+  {
+    "Id": 6,
+    "Name": "Eva Johnson",
+    "Age": 47,
+    "ExperienceYrs": 20,
+    "TeamId": 6,
+    "TeamName": "Black Rovers"
+  },
+  {
+    "Id": 7,
+    "Name": "Sofia Moore",
+    "Age": 46,
+    "ExperienceYrs": 32,
+    "TeamId": 7,
+    "TeamName": "White United"
+  },
+  {
+    "Id": 8,
+    "Name": "Luca Miller",
+    "Age": 55,
+    "ExperienceYrs": 30,
+    "TeamId": 8,
+    "TeamName": "Royal City"
+  },
+  {
+    "Id": 9,
+    "Name": "Mateo Jones",
+    "Age": 32,
+    "ExperienceYrs": 35,
+    "TeamId": 9,
+    "TeamName": "Iron Rangers"
+  },
+  {
+    "Id": 10,
+    "Name": "Oliver Miller",
+    "Age": 49,
+    "ExperienceYrs": 33,
+    "TeamId": 10,
+    "TeamName": "Swift Athletic"
+  },
+  {
+    "Id": 11,
+    "Name": "Marco Davis",
+    "Age": 64,
+    "ExperienceYrs": 18,
+    "TeamId": 11,
+    "TeamName": "Red Tigers"
+  },
+  {
+    "Id": 12,
+    "Name": "Carlos Taylor",
+    "Age": 43,
+    "ExperienceYrs": 11,
+    "TeamId": 12,
+    "TeamName": "Blue Eagles"
+  },
+  {
+    "Id": 13,
+    "Name": "Diego Jones",
+    "Age": 66,
+    "ExperienceYrs": 8,
+    "TeamId": 13,
+    "TeamName": "Green Sharks"
+  },
+  {
+    "Id": 14,
+    "Name": "Roberto Johnson",
+    "Age": 36,
+    "ExperienceYrs": 31,
+    "TeamId": 14,
+    "TeamName": "Golden Wolves"
+  },
+  {
+    "Id": 15,
+    "Name": "Anna Moore",
+    "Age": 67,
+    "ExperienceYrs": 2,
+    "TeamId": 15,
+    "TeamName": "Silver Lions"
+  },
+  {
+    "Id": 16,
+    "Name": "Eva Moore",
+    "Age": 37,
+    "ExperienceYrs": 26,
+    "TeamId": 16,
+    "TeamName": "Black Rovers"
+  },
+  {
+    "Id": 17,
+    "Name": "Sofia Davis",
+    "Age": 38,
+    "ExperienceYrs": 25,
+    "TeamId": 17,
+    "TeamName": "White United"
+  },
+  {
+    "Id": 18,
+    "Name": "Luca Johnson",
+    "Age": 46,
+    "ExperienceYrs": 29,
+    "TeamId": 18,
+    "TeamName": "Royal City"
+  },
+  {
+    "Id": 19,
+    "Name": "Mateo Brown",
+    "Age": 36,
+    "ExperienceYrs": 30,
+    "TeamId": 19,
+    "TeamName": "Iron Rangers"
+  },
+  {
+    "Id": 20,
+    "Name": "Oliver Taylor",
+    "Age": 40,
+    "ExperienceYrs": 34,
+    "TeamId": 20,
+    "TeamName": "Swift Athletic"
+  }
+]

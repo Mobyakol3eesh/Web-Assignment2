@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace web_assignment.Migrations
+namespace Tuna_SoccerLeague.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -13,22 +13,6 @@ namespace web_assignment.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Matches",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Location = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Matches", x => x.Id);
-                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -71,12 +55,14 @@ namespace web_assignment.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MatchTeams",
+                name: "Matches",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MatchId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Location = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     HomeTeamId = table.Column<int>(type: "int", nullable: false),
                     AwayTeamId = table.Column<int>(type: "int", nullable: false),
                     HomeTeamScore = table.Column<int>(type: "int", nullable: false),
@@ -85,27 +71,21 @@ namespace web_assignment.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MatchTeams", x => x.Id);
+                    table.PrimaryKey("PK_Matches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MatchTeams_Matches_MatchId",
-                        column: x => x.MatchId,
-                        principalTable: "Matches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MatchTeams_Teams_AwayTeamId",
+                        name: "FK_Matches_Teams_AwayTeamId",
                         column: x => x.AwayTeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MatchTeams_Teams_HomeTeamId",
+                        name: "FK_Matches_Teams_HomeTeamId",
                         column: x => x.HomeTeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MatchTeams_Teams_TeamId",
+                        name: "FK_Matches_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id");
@@ -124,6 +104,7 @@ namespace web_assignment.Migrations
                     MarketValue = table.Column<int>(type: "int", nullable: false),
                     Position = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    JerseyNumber = table.Column<int>(type: "int", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -139,6 +120,43 @@ namespace web_assignment.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Goals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TimeScored = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ScorerName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PlayerId = table.Column<int>(type: "int", nullable: false),
+                    MatchId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Goals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Goals_Matches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Matches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Goals_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Goals_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "PlayerStats",
                 columns: table => new
                 {
@@ -146,7 +164,10 @@ namespace web_assignment.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Goals = table.Column<int>(type: "int", nullable: false),
                     Assists = table.Column<int>(type: "int", nullable: false),
-                    Appearances = table.Column<int>(type: "int", nullable: false),
+                    ShotsOnTarget = table.Column<int>(type: "int", nullable: false),
+                    Touches = table.Column<int>(type: "int", nullable: false),
+                    PassesCompleted = table.Column<int>(type: "int", nullable: false),
+                    Score = table.Column<float>(type: "float", nullable: false),
                     PlayerId = table.Column<int>(type: "int", nullable: false),
                     MatchId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -175,23 +196,33 @@ namespace web_assignment.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MatchTeams_AwayTeamId",
-                table: "MatchTeams",
-                column: "AwayTeamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MatchTeams_HomeTeamId",
-                table: "MatchTeams",
-                column: "HomeTeamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MatchTeams_MatchId",
-                table: "MatchTeams",
+                name: "IX_Goals_MatchId",
+                table: "Goals",
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MatchTeams_TeamId",
-                table: "MatchTeams",
+                name: "IX_Goals_PlayerId",
+                table: "Goals",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Goals_TeamId",
+                table: "Goals",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_AwayTeamId",
+                table: "Matches",
+                column: "AwayTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_HomeTeamId",
+                table: "Matches",
+                column: "HomeTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_TeamId",
+                table: "Matches",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
@@ -218,7 +249,7 @@ namespace web_assignment.Migrations
                 name: "Coaches");
 
             migrationBuilder.DropTable(
-                name: "MatchTeams");
+                name: "Goals");
 
             migrationBuilder.DropTable(
                 name: "PlayerStats");

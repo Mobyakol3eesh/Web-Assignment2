@@ -12,7 +12,7 @@ public class CoachController : Controller
     }
 
     [HttpGet("coaches")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get all coaches", Description = "Returns a list of all coaches.")]
     public async Task<ActionResult<IEnumerable<CoachReadDto>>> GetAllCoaches()
     {
@@ -21,7 +21,7 @@ public class CoachController : Controller
     }
 
     [HttpGet("coaches/{id}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get coach by id", Description = "Returns coach details by id.")]
     public async Task<ActionResult<CoachReadDto>> GetCoachDetailsById(int id)
     {

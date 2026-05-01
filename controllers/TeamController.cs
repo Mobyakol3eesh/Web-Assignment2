@@ -14,7 +14,7 @@ public class TeamController : Controller
         }
 
     [HttpGet("teams/MVP/{teamId}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get team MVP", Description = "Returns the most valuable player in a team.")]
     public async Task<ActionResult<PlayerReadDto>> GetMostValuablePlayerInTeam(int teamId)
     {
@@ -29,7 +29,7 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams/{id}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get team by id", Description = "Returns a single team with players and coach info.")]
     public async Task<ActionResult<TeamReadDto>> GetTeamDetailsById(int id)
     {
@@ -87,7 +87,7 @@ public class TeamController : Controller
     }
 
     [HttpGet("teams/team-matches/{teamId}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get team matches", Description = "Returns all matches where the team played as home or away.")]
     public async Task<ActionResult<IEnumerable<MatchReadDto>>> GetAllTeamMatches(int teamId)
     {
@@ -102,7 +102,7 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams/teamplayers/{teamId}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get team players", Description = "Returns all players for a specific team.")]
     public async Task<ActionResult<IEnumerable<PlayerReadDto>>> GetAllTeamPlayers(int teamId)
     {
@@ -117,7 +117,7 @@ public class TeamController : Controller
         }
     }
     [HttpGet("teams")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get all teams", Description = "Returns a list of all teams.")]
     public async Task<ActionResult<IEnumerable<TeamReadDto>>> GetAllTeams()
     {

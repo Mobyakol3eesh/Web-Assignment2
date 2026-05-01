@@ -12,7 +12,7 @@ public class MatchController : Controller
 	}
 
 	[HttpGet("matches")]
-	[Authorize(Roles = "User")]
+	[Authorize(Roles = "User,Admin")]
 	[SwaggerOperation(Summary = "Get all matches", Description = "Returns a list of all matches.")]
 	public async Task<ActionResult<IEnumerable<MatchReadDto>>> GetAllMatches()
 	{
@@ -21,7 +21,7 @@ public class MatchController : Controller
 	}
 
 	[HttpGet("matches/{id}")]
-	[Authorize(Roles = "User")]
+	[Authorize(Roles = "User,Admin")]
 	[SwaggerOperation(Summary = "Get match by id", Description = "Returns match details by id.")]
 	public async Task<ActionResult<MatchReadDto>> GetMatchDetailsById(int id)
 	{

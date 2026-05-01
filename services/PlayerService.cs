@@ -99,7 +99,12 @@ public class PlayerService : IPlayerService
                 Id = ps.Id,
                 Goals = ps.Goals,
                 Assists = ps.Assists,
-                Appearances = ps.Appearances,
+                ShotsOnTarget = ps.ShotsOnTarget,
+                Touches = ps.Touches,
+                PassesCompleted = ps.PassesCompleted,
+                Score = ps.Score,
+                PlayerId = ps.PlayerId,
+                MatchId = ps.MatchId,
                 PlayerName = ps.Player != null ? ps.Player.Name : string.Empty,
                 MatchDate = ps.Match != null ? ps.Match.Date : default,
                 MatchLocation = ps.Match != null ? ps.Match.Location : string.Empty
@@ -117,7 +122,12 @@ public class PlayerService : IPlayerService
                 Id = ps.Id,
                 Goals = ps.Goals,
                 Assists = ps.Assists,
-                Appearances = ps.Appearances,
+                ShotsOnTarget = ps.ShotsOnTarget,
+                Touches = ps.Touches,
+                PassesCompleted = ps.PassesCompleted,
+                Score = ps.Score,
+                PlayerId = ps.PlayerId,
+                MatchId = ps.MatchId,
                 PlayerName = ps.Player != null ? ps.Player.Name : string.Empty,
                 MatchDate = ps.Match != null ? ps.Match.Date : default,
                 MatchLocation = ps.Match != null ? ps.Match.Location : string.Empty
@@ -146,7 +156,10 @@ public class PlayerService : IPlayerService
         {
             Goals = dto.Goals,
             Assists = dto.Assists,
-            Appearances = dto.Appearances,
+            ShotsOnTarget = dto.ShotsOnTarget,
+            Touches = dto.Touches,
+            PassesCompleted = dto.PassesCompleted,
+            Score = dto.Score,
             PlayerId = dto.PlayerId,
             MatchId = dto.MatchId,
             Player = null!,
@@ -169,7 +182,10 @@ public class PlayerService : IPlayerService
 
         playerStats.Goals = dto.Goals;
         playerStats.Assists = dto.Assists;
-        playerStats.Appearances = dto.Appearances;
+        playerStats.ShotsOnTarget = dto.ShotsOnTarget;
+        playerStats.Touches = dto.Touches;
+        playerStats.PassesCompleted = dto.PassesCompleted;
+        playerStats.Score = dto.Score;
 
         await tunaLeagueContext.SaveChangesAsync();
     }

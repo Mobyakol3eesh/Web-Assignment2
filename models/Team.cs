@@ -10,8 +10,11 @@ public class Team
 
     public Coach? Coach { get; set; }
     public IEnumerable<Player> Players { get; set; } = new List<Player>();
+    public IEnumerable<Goal> Goals { get; set; } = new List<Goal>();
 
-    public IEnumerable<MatchTeam> Matches { get; set; } = new List<MatchTeam>();
+    
+
+    public IEnumerable<Match> Matches { get; set; } = new List<Match>();
 
 
     

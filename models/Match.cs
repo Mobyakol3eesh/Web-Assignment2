@@ -8,4 +8,16 @@ public class Match
     
     public String Location { get; set; } = string.Empty;
 
+
+    public int HomeTeamId { get; set; }
+    public  Team? HomeTeam { get; set; }
+
+    public int AwayTeamId { get; set; }
+    public  Team? AwayTeam { get; set; }
+
+    public int HomeTeamScore { get; set; }
+    public int AwayTeamScore { get; set; }
+
+    public IEnumerable<Goal> Goals { get; set; } = new List<Goal>();
+
 }

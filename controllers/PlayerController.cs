@@ -14,7 +14,7 @@ public class PlayerController : Controller
     }
 
     [HttpGet("players")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get all players", Description = "Returns a list of all players with their basic details and team name.")]
     public async Task<ActionResult<IEnumerable<PlayerReadDto>>> GetAllPlayers()
     {
@@ -23,7 +23,7 @@ public class PlayerController : Controller
     }
 
     [HttpGet("players/{id}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get player by id", Description = "Returns a single player's details by id.")]
     public async Task<ActionResult<PlayerReadDto>> GetPlayerDetailsById(int id)
     {
@@ -81,7 +81,7 @@ public class PlayerController : Controller
     }
 
     [HttpGet("players/player-stats")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get all player stats", Description = "Returns all player statistics entries.")]
     public async Task<ActionResult<IEnumerable<PlayerStatsReadDto>>> GetAllPlayerStats()
     {
@@ -90,7 +90,7 @@ public class PlayerController : Controller
     }
 
     [HttpGet("players/player-stats/{id}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     [SwaggerOperation(Summary = "Get player stats by id", Description = "Returns one player stats record by id.")]
     public async Task<ActionResult<PlayerStatsReadDto>> GetPlayerStatsById(int id)
     {

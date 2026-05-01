@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 [ApiController]
 [Route("auth")]
@@ -31,12 +33,25 @@ public class AuthController : ControllerBase
             return Unauthorized("Invalid username or password.");
         }
 
-        var token = GenerateToken(dto.Username, role);
-        return Ok(new
+        
+        var claims = new[]
         {
-            accessToken = token,
-            role
-        });
+            new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, dto.Username),
+            new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role)
+        };
+
+        var identity = new System.Security.Claims.ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new System.Security.Claims.ClaimsPrincipal(identity);
+
+        var authProperties = new AuthenticationProperties
+        {
+            IsPersistent = false,
+            AllowRefresh = false
+        };
+
+        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties).GetAwaiter().GetResult();
+
+        return Ok(new { message = "Logged in, auth cookie set.", role });
     }
 
     private string? ValidateUser(string username, string password)

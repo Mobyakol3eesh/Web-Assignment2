@@ -13,7 +13,46 @@ internal static class ServiceCollectionExtensions
 
         services.AddControllersWithViews();
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        services.AddAuthentication(options =>
+            {
+               
+                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
+                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+                options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") || ctx.Request.Path.StartsWithSegments("/auth"))
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+                        return Task.CompletedTask;
+                    },
+                    OnRedirectToAccessDenied = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") || ctx.Request.Path.StartsWithSegments("/auth"))
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            })
+            // Keep JwtBearer available for non-cookie clients if needed
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -75,6 +114,15 @@ internal static class ServiceCollectionExtensions
                 Description = "Enter JWT token as: Bearer {your token}"
             });
 
+            // Cookie auth definition - allow supplying the auth cookie in Swagger UI
+            options.AddSecurityDefinition("cookieAuth", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.ApiKey,
+                In = ParameterLocation.Cookie,
+                Name = ".AspNetCore.Cookies",
+                Description = "Cookie based auth. Set your auth cookie value here (e.g. .AspNetCore.Cookies=<value>)."
+            });
+
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
@@ -88,6 +136,18 @@ internal static class ServiceCollectionExtensions
                     },
                     Array.Empty<string>()
                 }
+                ,
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "cookieAuth"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
             });
         });
 
@@ -95,6 +155,7 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IPlayerService, PlayerService>();
         services.AddScoped<IMatchService, MatchService>();
         services.AddScoped<ICoachService, CoachService>();
+        services.AddScoped<IGoalService, GoalService>();
 
         return services;
     }

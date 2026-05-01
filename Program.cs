@@ -10,6 +10,6 @@ builder.Services.AddApplicationServices(connectionString, jwtConfig);
 var app = builder.Build();
 
 app.UseApplicationMiddleware();
-app.MapApplicationEndpoints();
+
 
 app.Run();

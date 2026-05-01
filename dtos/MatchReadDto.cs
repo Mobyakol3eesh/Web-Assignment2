@@ -6,7 +6,9 @@ public class MatchReadDto
 
     public string HomeTeamName { get; set; } = string.Empty;
     public int HomeTeamScore { get; set; }
+    public int HomeTeamGoals { get; set; }
 
     public string AwayTeamName { get; set; } = string.Empty;
     public int AwayTeamScore { get; set; }
+    public int AwayTeamGoals { get; set; }
 }

@@ -1,0 +1,546 @@
+[
+  {
+    "Id": 1,
+    "PlayerId": 7,
+    "MatchId": 1,
+    "TeamId": 1,
+    "TimeScored": "73'",
+    "ScorerName": "Cameron Johnson"
+  },
+  {
+    "Id": 2,
+    "PlayerId": 7,
+    "MatchId": 1,
+    "TeamId": 1,
+    "TimeScored": "72'",
+    "ScorerName": "Cameron Johnson"
+  },
+  {
+    "Id": 3,
+    "PlayerId": 57,
+    "MatchId": 2,
+    "TeamId": 4,
+    "TimeScored": "48'",
+    "ScorerName": "Drew Miller"
+  },
+  {
+    "Id": 4,
+    "PlayerId": 241,
+    "MatchId": 3,
+    "TeamId": 14,
+    "TimeScored": "66'",
+    "ScorerName": "Morgan Miller"
+  },
+  {
+    "Id": 5,
+    "PlayerId": 103,
+    "MatchId": 3,
+    "TeamId": 6,
+    "TimeScored": "18'",
+    "ScorerName": "Pat Williams"
+  },
+  {
+    "Id": 6,
+    "PlayerId": 219,
+    "MatchId": 4,
+    "TeamId": 13,
+    "TimeScored": "48'",
+    "ScorerName": "Noah Brown"
+  },
+  {
+    "Id": 7,
+    "PlayerId": 229,
+    "MatchId": 4,
+    "TeamId": 13,
+    "TimeScored": "43'",
+    "ScorerName": "Taylor Moore"
+  },
+  {
+    "Id": 8,
+    "PlayerId": 45,
+    "MatchId": 5,
+    "TeamId": 3,
+    "TimeScored": "80'",
+    "ScorerName": "Casey Johnson"
+  },
+  {
+    "Id": 9,
+    "PlayerId": 46,
+    "MatchId": 5,
+    "TeamId": 3,
+    "TimeScored": "49'",
+    "ScorerName": "Chris Moore"
+  },
+  {
+    "Id": 10,
+    "PlayerId": 298,
+    "MatchId": 6,
+    "TeamId": 17,
+    "TimeScored": "8'",
+    "ScorerName": "Liam Miller"
+  },
+  {
+    "Id": 11,
+    "PlayerId": 174,
+    "MatchId": 7,
+    "TeamId": 10,
+    "TimeScored": "88'",
+    "ScorerName": "Avery Johnson"
+  },
+  {
+    "Id": 12,
+    "PlayerId": 178,
+    "MatchId": 7,
+    "TeamId": 10,
+    "TimeScored": "83'",
+    "ScorerName": "Riley Wilson"
+  },
+  {
+    "Id": 13,
+    "PlayerId": 188,
+    "MatchId": 8,
+    "TeamId": 11,
+    "TimeScored": "72'",
+    "ScorerName": "Kai Wilson"
+  },
+  {
+    "Id": 14,
+    "PlayerId": 188,
+    "MatchId": 8,
+    "TeamId": 11,
+    "TimeScored": "36'",
+    "ScorerName": "Kai Wilson"
+  },
+  {
+    "Id": 15,
+    "PlayerId": 354,
+    "MatchId": 9,
+    "TeamId": 20,
+    "TimeScored": "33'",
+    "ScorerName": "Ethan Johnson"
+  },
+  {
+    "Id": 16,
+    "PlayerId": 348,
+    "MatchId": 9,
+    "TeamId": 20,
+    "TimeScored": "62'",
+    "ScorerName": "Noah Jones"
+  },
+  {
+    "Id": 17,
+    "PlayerId": 349,
+    "MatchId": 9,
+    "TeamId": 20,
+    "TimeScored": "28'",
+    "ScorerName": "Max Moore"
+  },
+  {
+    "Id": 18,
+    "PlayerId": 110,
+    "MatchId": 10,
+    "TeamId": 7,
+    "TimeScored": "13'",
+    "ScorerName": "Riley Wilson"
+  },
+  {
+    "Id": 19,
+    "PlayerId": 151,
+    "MatchId": 10,
+    "TeamId": 9,
+    "TimeScored": "88'",
+    "ScorerName": "Cameron Wilson"
+  },
+  {
+    "Id": 20,
+    "PlayerId": 156,
+    "MatchId": 10,
+    "TeamId": 9,
+    "TimeScored": "18'",
+    "ScorerName": "Casey Jones"
+  },
+  {
+    "Id": 21,
+    "PlayerId": 300,
+    "MatchId": 11,
+    "TeamId": 17,
+    "TimeScored": "5'",
+    "ScorerName": "Max Williams"
+  },
+  {
+    "Id": 22,
+    "PlayerId": 299,
+    "MatchId": 11,
+    "TeamId": 17,
+    "TimeScored": "23'",
+    "ScorerName": "Liam Brown"
+  },
+  {
+    "Id": 23,
+    "PlayerId": 19,
+    "MatchId": 12,
+    "TeamId": 2,
+    "TimeScored": "83'",
+    "ScorerName": "Ethan Miller"
+  },
+  {
+    "Id": 24,
+    "PlayerId": 35,
+    "MatchId": 12,
+    "TeamId": 2,
+    "TimeScored": "70'",
+    "ScorerName": "Casey Williams"
+  },
+  {
+    "Id": 25,
+    "PlayerId": 23,
+    "MatchId": 12,
+    "TeamId": 2,
+    "TimeScored": "68'",
+    "ScorerName": "Noah Smith"
+  },
+  {
+    "Id": 26,
+    "PlayerId": 106,
+    "MatchId": 13,
+    "TeamId": 6,
+    "TimeScored": "73'",
+    "ScorerName": "Riley Davis"
+  },
+  {
+    "Id": 27,
+    "PlayerId": 128,
+    "MatchId": 15,
+    "TeamId": 8,
+    "TimeScored": "16'",
+    "ScorerName": "Quinn Miller"
+  },
+  {
+    "Id": 28,
+    "PlayerId": 262,
+    "MatchId": 18,
+    "TeamId": 15,
+    "TimeScored": "88'",
+    "ScorerName": "Liam Smith"
+  },
+  {
+    "Id": 29,
+    "PlayerId": 255,
+    "MatchId": 18,
+    "TeamId": 15,
+    "TimeScored": "27'",
+    "ScorerName": "Morgan Miller"
+  },
+  {
+    "Id": 30,
+    "PlayerId": 287,
+    "MatchId": 18,
+    "TeamId": 16,
+    "TimeScored": "75'",
+    "ScorerName": "Quinn Moore"
+  },
+  {
+    "Id": 31,
+    "PlayerId": 279,
+    "MatchId": 18,
+    "TeamId": 16,
+    "TimeScored": "63'",
+    "ScorerName": "Drew Taylor"
+  },
+  {
+    "Id": 32,
+    "PlayerId": 7,
+    "MatchId": 19,
+    "TeamId": 1,
+    "TimeScored": "75'",
+    "ScorerName": "Cameron Johnson"
+  },
+  {
+    "Id": 33,
+    "PlayerId": 14,
+    "MatchId": 19,
+    "TeamId": 1,
+    "TimeScored": "10'",
+    "ScorerName": "Jamie Wilson"
+  },
+  {
+    "Id": 34,
+    "PlayerId": 247,
+    "MatchId": 19,
+    "TeamId": 14,
+    "TimeScored": "6'",
+    "ScorerName": "Jordan Miller"
+  },
+  {
+    "Id": 35,
+    "PlayerId": 341,
+    "MatchId": 20,
+    "TeamId": 19,
+    "TimeScored": "54'",
+    "ScorerName": "Max Davis"
+  },
+  {
+    "Id": 36,
+    "PlayerId": 120,
+    "MatchId": 20,
+    "TeamId": 7,
+    "TimeScored": "48'",
+    "ScorerName": "Quinn Jones"
+  },
+  {
+    "Id": 37,
+    "PlayerId": 112,
+    "MatchId": 22,
+    "TeamId": 7,
+    "TimeScored": "25'",
+    "ScorerName": "Alex Miller"
+  },
+  {
+    "Id": 38,
+    "PlayerId": 1,
+    "MatchId": 23,
+    "TeamId": 1,
+    "TimeScored": "57'",
+    "ScorerName": "Taylor Johnson"
+  },
+  {
+    "Id": 39,
+    "PlayerId": 140,
+    "MatchId": 24,
+    "TeamId": 8,
+    "TimeScored": "19'",
+    "ScorerName": "Jordan Williams"
+  },
+  {
+    "Id": 40,
+    "PlayerId": 131,
+    "MatchId": 24,
+    "TeamId": 8,
+    "TimeScored": "85'",
+    "ScorerName": "Avery Davis"
+  },
+  {
+    "Id": 41,
+    "PlayerId": 250,
+    "MatchId": 25,
+    "TeamId": 14,
+    "TimeScored": "20'",
+    "ScorerName": "Casey Johnson"
+  },
+  {
+    "Id": 42,
+    "PlayerId": 30,
+    "MatchId": 25,
+    "TeamId": 2,
+    "TimeScored": "39'",
+    "ScorerName": "Casey Taylor"
+  },
+  {
+    "Id": 43,
+    "PlayerId": 32,
+    "MatchId": 25,
+    "TeamId": 2,
+    "TimeScored": "49'",
+    "ScorerName": "Noah Brown"
+  },
+  {
+    "Id": 44,
+    "PlayerId": 23,
+    "MatchId": 25,
+    "TeamId": 2,
+    "TimeScored": "24'",
+    "ScorerName": "Noah Smith"
+  },
+  {
+    "Id": 45,
+    "PlayerId": 25,
+    "MatchId": 25,
+    "TeamId": 2,
+    "TimeScored": "69'",
+    "ScorerName": "Quinn Smith"
+  },
+  {
+    "Id": 46,
+    "PlayerId": 293,
+    "MatchId": 26,
+    "TeamId": 17,
+    "TimeScored": "58'",
+    "ScorerName": "Kai Johnson"
+  },
+  {
+    "Id": 47,
+    "PlayerId": 301,
+    "MatchId": 26,
+    "TeamId": 17,
+    "TimeScored": "48'",
+    "ScorerName": "Casey Moore"
+  },
+  {
+    "Id": 48,
+    "PlayerId": 104,
+    "MatchId": 27,
+    "TeamId": 6,
+    "TimeScored": "27'",
+    "ScorerName": "Noah Johnson"
+  },
+  {
+    "Id": 49,
+    "PlayerId": 275,
+    "MatchId": 27,
+    "TeamId": 16,
+    "TimeScored": "43'",
+    "ScorerName": "Drew Williams"
+  },
+  {
+    "Id": 50,
+    "PlayerId": 331,
+    "MatchId": 29,
+    "TeamId": 19,
+    "TimeScored": "27'",
+    "ScorerName": "Jamie Wilson"
+  },
+  {
+    "Id": 51,
+    "PlayerId": 45,
+    "MatchId": 31,
+    "TeamId": 3,
+    "TimeScored": "22'",
+    "ScorerName": "Casey Johnson"
+  },
+  {
+    "Id": 52,
+    "PlayerId": 275,
+    "MatchId": 31,
+    "TeamId": 16,
+    "TimeScored": "18'",
+    "ScorerName": "Drew Williams"
+  },
+  {
+    "Id": 53,
+    "PlayerId": 286,
+    "MatchId": 31,
+    "TeamId": 16,
+    "TimeScored": "70'",
+    "ScorerName": "Kai Brown"
+  },
+  {
+    "Id": 54,
+    "PlayerId": 237,
+    "MatchId": 32,
+    "TeamId": 14,
+    "TimeScored": "2'",
+    "ScorerName": "Sam Davis"
+  },
+  {
+    "Id": 55,
+    "PlayerId": 246,
+    "MatchId": 32,
+    "TeamId": 14,
+    "TimeScored": "28'",
+    "ScorerName": "Noah Smith"
+  },
+  {
+    "Id": 56,
+    "PlayerId": 313,
+    "MatchId": 33,
+    "TeamId": 18,
+    "TimeScored": "65'",
+    "ScorerName": "Drew Williams"
+  },
+  {
+    "Id": 57,
+    "PlayerId": 63,
+    "MatchId": 34,
+    "TeamId": 4,
+    "TimeScored": "73'",
+    "ScorerName": "Jordan Brown"
+  },
+  {
+    "Id": 58,
+    "PlayerId": 1,
+    "MatchId": 35,
+    "TeamId": 1,
+    "TimeScored": "56'",
+    "ScorerName": "Taylor Johnson"
+  },
+  {
+    "Id": 59,
+    "PlayerId": 3,
+    "MatchId": 35,
+    "TeamId": 1,
+    "TimeScored": "83'",
+    "ScorerName": "Kai Taylor"
+  },
+  {
+    "Id": 60,
+    "PlayerId": 205,
+    "MatchId": 35,
+    "TeamId": 12,
+    "TimeScored": "43'",
+    "ScorerName": "Casey Taylor"
+  },
+  {
+    "Id": 61,
+    "PlayerId": 224,
+    "MatchId": 36,
+    "TeamId": 13,
+    "TimeScored": "41'",
+    "ScorerName": "Chris Miller"
+  },
+  {
+    "Id": 62,
+    "PlayerId": 226,
+    "MatchId": 36,
+    "TeamId": 13,
+    "TimeScored": "3'",
+    "ScorerName": "Lee Williams"
+  },
+  {
+    "Id": 63,
+    "PlayerId": 217,
+    "MatchId": 36,
+    "TeamId": 13,
+    "TimeScored": "27'",
+    "ScorerName": "Riley Johnson"
+  },
+  {
+    "Id": 64,
+    "PlayerId": 140,
+    "MatchId": 38,
+    "TeamId": 8,
+    "TimeScored": "49'",
+    "ScorerName": "Jordan Williams"
+  },
+  {
+    "Id": 65,
+    "PlayerId": 134,
+    "MatchId": 38,
+    "TeamId": 8,
+    "TimeScored": "56'",
+    "ScorerName": "Casey Miller"
+  },
+  {
+    "Id": 66,
+    "PlayerId": 96,
+    "MatchId": 38,
+    "TeamId": 6,
+    "TimeScored": "24'",
+    "ScorerName": "Alex Johnson"
+  },
+  {
+    "Id": 67,
+    "PlayerId": 102,
+    "MatchId": 38,
+    "TeamId": 6,
+    "TimeScored": "88'",
+    "ScorerName": "Avery Williams"
+  },
+  {
+    "Id": 68,
+    "PlayerId": 182,
+    "MatchId": 40,
+    "TeamId": 11,
+    "TimeScored": "71'",
+    "ScorerName": "Noah Wilson"
+  }
+]

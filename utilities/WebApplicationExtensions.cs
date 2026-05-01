@@ -11,17 +11,10 @@ internal static class WebApplicationExtensions
         app.UseAuthentication();
         app.UseAuthorization();
 
-        return app;
-    }
-
-    internal static WebApplication MapApplicationEndpoints(this WebApplication app)
-    {
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Team}/{action=Index}/{id?}");
-
         app.MapControllers();
 
         return app;
     }
+
+    
 }

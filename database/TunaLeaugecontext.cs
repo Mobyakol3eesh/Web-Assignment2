@@ -8,7 +8,7 @@ public class TunaLeagueContext : DbContext {
     public DbSet<Coach> Coaches { get; set; }
 
     public DbSet<Match> Matches { get; set; }
-    public DbSet<MatchTeam> MatchTeams { get; set; }
+    public DbSet<Goal> Goals { get; set; }
     
     public DbSet<PlayerStats> PlayerStats { get; set; }
 
@@ -16,21 +16,36 @@ public class TunaLeagueContext : DbContext {
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<MatchTeam>()
-            .HasOne(mt => mt.Match)
+        modelBuilder.Entity<Match>()
+            .HasOne(m => m.HomeTeam)
             .WithMany()
-            .HasForeignKey(mt => mt.MatchId);
-
-        modelBuilder.Entity<MatchTeam>()
-            .HasOne(mt => mt.HomeTeam)
-            .WithMany()
-            .HasForeignKey(mt => mt.HomeTeamId)
+            .HasForeignKey(m => m.HomeTeamId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<MatchTeam>()
-            .HasOne(mt => mt.AwayTeam)
+        modelBuilder.Entity<Match>()
+            .HasOne(m => m.AwayTeam)
             .WithMany()
-            .HasForeignKey(mt => mt.AwayTeamId)
+            .HasForeignKey(m => m.AwayTeamId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Goal>()
+            .HasOne(g => g.Player)
+            .WithMany(p => p.Goals)
+            .HasForeignKey(g => g.PlayerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Goal>()
+            .HasOne(g => g.Match)
+            .WithMany(m => m.Goals)
+            .HasForeignKey(g => g.MatchId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Goal>()
+            .HasOne(g => g.Team)
+            .WithMany(t => t.Goals)
+            .HasForeignKey(g => g.TeamId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
+
+    
 }

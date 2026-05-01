@@ -1,0 +1,362 @@
+[
+  {
+    "Id": 1,
+    "Date": "2026-05-06T22:15:28.800197",
+    "Location": "Stadium 19",
+    "HomeTeamId": 19,
+    "AwayTeamId": 1,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 2,
+    "Date": "2026-05-06T22:15:28.800197",
+    "Location": "Stadium 4",
+    "HomeTeamId": 4,
+    "AwayTeamId": 8,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 3,
+    "Date": "2026-04-30T22:15:28.800197",
+    "Location": "Stadium 14",
+    "HomeTeamId": 14,
+    "AwayTeamId": 6,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 4,
+    "Date": "2026-04-30T22:15:28.800197",
+    "Location": "Stadium 15",
+    "HomeTeamId": 15,
+    "AwayTeamId": 13,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 5,
+    "Date": "2026-04-30T22:15:28.800197",
+    "Location": "Stadium 3",
+    "HomeTeamId": 3,
+    "AwayTeamId": 12,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 6,
+    "Date": "2026-05-05T22:15:28.800197",
+    "Location": "Stadium 2",
+    "HomeTeamId": 2,
+    "AwayTeamId": 17,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 7,
+    "Date": "2026-05-06T22:15:28.800197",
+    "Location": "Stadium 10",
+    "HomeTeamId": 10,
+    "AwayTeamId": 16,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 8,
+    "Date": "2026-05-04T22:15:28.800197",
+    "Location": "Stadium 11",
+    "HomeTeamId": 11,
+    "AwayTeamId": 5,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 9,
+    "Date": "2026-05-02T22:15:28.800197",
+    "Location": "Stadium 20",
+    "HomeTeamId": 20,
+    "AwayTeamId": 18,
+    "HomeTeamScore": 3,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 10,
+    "Date": "2026-05-05T22:15:28.800197",
+    "Location": "Stadium 7",
+    "HomeTeamId": 7,
+    "AwayTeamId": 9,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 11,
+    "Date": "2026-05-12T22:15:28.800197",
+    "Location": "Stadium 10",
+    "HomeTeamId": 10,
+    "AwayTeamId": 17,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 12,
+    "Date": "2026-05-07T22:15:28.800197",
+    "Location": "Stadium 2",
+    "HomeTeamId": 2,
+    "AwayTeamId": 3,
+    "HomeTeamScore": 3,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 13,
+    "Date": "2026-05-08T22:15:28.800197",
+    "Location": "Stadium 13",
+    "HomeTeamId": 13,
+    "AwayTeamId": 6,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 14,
+    "Date": "2026-05-10T22:15:28.800197",
+    "Location": "Stadium 20",
+    "HomeTeamId": 20,
+    "AwayTeamId": 4,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 15,
+    "Date": "2026-05-10T22:15:28.800197",
+    "Location": "Stadium 8",
+    "HomeTeamId": 8,
+    "AwayTeamId": 12,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 16,
+    "Date": "2026-05-10T22:15:28.800197",
+    "Location": "Stadium 18",
+    "HomeTeamId": 18,
+    "AwayTeamId": 5,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 17,
+    "Date": "2026-05-10T22:15:28.800197",
+    "Location": "Stadium 9",
+    "HomeTeamId": 9,
+    "AwayTeamId": 11,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 18,
+    "Date": "2026-05-08T22:15:28.800197",
+    "Location": "Stadium 15",
+    "HomeTeamId": 15,
+    "AwayTeamId": 16,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 19,
+    "Date": "2026-05-09T22:15:28.800197",
+    "Location": "Stadium 1",
+    "HomeTeamId": 1,
+    "AwayTeamId": 14,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 20,
+    "Date": "2026-05-11T22:15:28.800197",
+    "Location": "Stadium 19",
+    "HomeTeamId": 19,
+    "AwayTeamId": 7,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 21,
+    "Date": "2026-05-14T22:15:28.800197",
+    "Location": "Stadium 10",
+    "HomeTeamId": 10,
+    "AwayTeamId": 20,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 22,
+    "Date": "2026-05-14T22:15:28.800197",
+    "Location": "Stadium 18",
+    "HomeTeamId": 18,
+    "AwayTeamId": 7,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 23,
+    "Date": "2026-05-16T22:15:28.800197",
+    "Location": "Stadium 15",
+    "HomeTeamId": 15,
+    "AwayTeamId": 1,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 24,
+    "Date": "2026-05-17T22:15:28.800197",
+    "Location": "Stadium 8",
+    "HomeTeamId": 8,
+    "AwayTeamId": 4,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 25,
+    "Date": "2026-05-20T22:15:28.800197",
+    "Location": "Stadium 14",
+    "HomeTeamId": 14,
+    "AwayTeamId": 2,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 4
+  },
+  {
+    "Id": 26,
+    "Date": "2026-05-18T22:15:28.800197",
+    "Location": "Stadium 17",
+    "HomeTeamId": 17,
+    "AwayTeamId": 9,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 27,
+    "Date": "2026-05-17T22:15:28.800197",
+    "Location": "Stadium 6",
+    "HomeTeamId": 6,
+    "AwayTeamId": 16,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 28,
+    "Date": "2026-05-15T22:15:28.800197",
+    "Location": "Stadium 3",
+    "HomeTeamId": 3,
+    "AwayTeamId": 13,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 29,
+    "Date": "2026-05-20T22:15:28.800197",
+    "Location": "Stadium 12",
+    "HomeTeamId": 12,
+    "AwayTeamId": 19,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 30,
+    "Date": "2026-05-15T22:15:28.800197",
+    "Location": "Stadium 11",
+    "HomeTeamId": 11,
+    "AwayTeamId": 5,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 31,
+    "Date": "2026-05-21T22:15:28.800197",
+    "Location": "Stadium 3",
+    "HomeTeamId": 3,
+    "AwayTeamId": 16,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 32,
+    "Date": "2026-05-21T22:15:28.800197",
+    "Location": "Stadium 14",
+    "HomeTeamId": 14,
+    "AwayTeamId": 10,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 33,
+    "Date": "2026-05-23T22:15:28.800197",
+    "Location": "Stadium 17",
+    "HomeTeamId": 17,
+    "AwayTeamId": 18,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 34,
+    "Date": "2026-05-24T22:15:28.800197",
+    "Location": "Stadium 4",
+    "HomeTeamId": 4,
+    "AwayTeamId": 2,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 35,
+    "Date": "2026-05-25T22:15:28.800197",
+    "Location": "Stadium 1",
+    "HomeTeamId": 1,
+    "AwayTeamId": 12,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 1
+  },
+  {
+    "Id": 36,
+    "Date": "2026-05-27T22:15:28.800197",
+    "Location": "Stadium 5",
+    "HomeTeamId": 5,
+    "AwayTeamId": 13,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 3
+  },
+  {
+    "Id": 37,
+    "Date": "2026-05-26T22:15:28.800197",
+    "Location": "Stadium 15",
+    "HomeTeamId": 15,
+    "AwayTeamId": 9,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 38,
+    "Date": "2026-05-26T22:15:28.800197",
+    "Location": "Stadium 8",
+    "HomeTeamId": 8,
+    "AwayTeamId": 6,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 2
+  },
+  {
+    "Id": 39,
+    "Date": "2026-05-24T22:15:28.800197",
+    "Location": "Stadium 7",
+    "HomeTeamId": 7,
+    "AwayTeamId": 20,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 0
+  },
+  {
+    "Id": 40,
+    "Date": "2026-05-23T22:15:28.800197",
+    "Location": "Stadium 19",
+    "HomeTeamId": 19,
+    "AwayTeamId": 11,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 1
+  }
+]

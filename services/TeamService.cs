@@ -77,29 +77,67 @@ public class TeamService : ITeamService
 
     public async Task<IEnumerable<MatchReadDto>> GetTeamMatches(int teamId)
     {
-        var mathes = await tunaLeagueContext.MatchTeams
-        .AsNoTracking()
-        .Where(mt => mt.HomeTeamId == teamId || mt.AwayTeamId == teamId)
-        .Select(mtdto => new MatchReadDto
+        var goalCounts = await tunaLeagueContext.Goals
+            .AsNoTracking()
+            .GroupBy(g => new { g.MatchId, g.TeamId })
+            .Select(g => new { g.Key.MatchId, g.Key.TeamId, Count = g.Count() })
+            .ToListAsync();
+
+        var goalCountLookup = goalCounts.ToDictionary(
+            x => (x.MatchId, x.TeamId),
+            x => x.Count);
+
+        var matches = await tunaLeagueContext.Matches
+            .AsNoTracking()
+            .Where(match => match.HomeTeamId == teamId || match.AwayTeamId == teamId)
+            .Select(match => new
+            {
+                match.Id,
+                match.Date,
+                match.Location,
+                HomeTeamName = match.HomeTeam != null ? match.HomeTeam.Name : string.Empty,
+                match.HomeTeamScore,
+                match.HomeTeamId,
+                AwayTeamName = match.AwayTeam != null ? match.AwayTeam.Name : string.Empty,
+                match.AwayTeamScore,
+                match.AwayTeamId
+            })
+            .ToListAsync();
+
+        return matches.Select(match => new MatchReadDto
         {
-            Id = mtdto.MatchId,
-            Date = mtdto.Match != null ? mtdto.Match.Date : default,
-            Location = mtdto.Match != null ? mtdto.Match.Location : string.Empty,
-            HomeTeamName = mtdto.HomeTeam != null ? mtdto.HomeTeam.Name : string.Empty,
-            HomeTeamScore  = mtdto.HomeTeamScore,
-            AwayTeamName = mtdto.AwayTeam != null ? mtdto.AwayTeam.Name : string.Empty,
-            AwayTeamScore = mtdto.AwayTeamScore
-        }).ToListAsync();
-        return mathes;
+            Id = match.Id,
+            Date = match.Date,
+            Location = match.Location,
+            HomeTeamName = match.HomeTeamName,
+            HomeTeamScore = match.HomeTeamScore,
+            HomeTeamGoals = goalCountLookup.TryGetValue((match.Id, match.HomeTeamId), out var homeGoals)
+                ? homeGoals
+                : 0,
+            AwayTeamName = match.AwayTeamName,
+            AwayTeamScore = match.AwayTeamScore,
+            AwayTeamGoals = goalCountLookup.TryGetValue((match.Id, match.AwayTeamId), out var awayGoals)
+                ? awayGoals
+                : 0
+        }).ToList();
     }
 
     public async Task<IEnumerable<TeamReadDto>> GetAllTeams()
     {
+        var goalCounts = await tunaLeagueContext.Goals
+            .AsNoTracking()
+            .GroupBy(g => g.TeamId)
+            .Select(g => new { TeamId = g.Key, Count = g.Count() })
+            .ToListAsync();
+
+        var goalCountDict = goalCounts.ToDictionary(x => x.TeamId, x => x.Count);
+
         var tdtos = await tunaLeagueContext.Teams.AsNoTracking().Select(t => new TeamReadDto
         {
             Id = t.Id,
             Name = t.Name,
             Points = t.Points,
+            Goals = goalCountDict.ContainsKey(t.Id) ? goalCountDict[t.Id] : 0,
             Players = t.Players.Select(p => new PlayerReadDto
             {
                 Id = p.Id,
@@ -134,6 +172,10 @@ public class TeamService : ITeamService
     
     public async Task<TeamReadDto> GetTeamDetailsById(int id)
     {
+        var goalCount = await tunaLeagueContext.Goals
+            .AsNoTracking()
+            .CountAsync(g => g.TeamId == id);
+
         var team = await tunaLeagueContext.Teams.AsNoTracking()
         .Where(t => t.Id == id)
         .Select(t => new TeamReadDto
@@ -141,6 +183,7 @@ public class TeamService : ITeamService
             Id = t.Id,
             Name = t.Name,
             Points = t.Points,
+            Goals = goalCount,
             Players = t.Players.Select(p => new PlayerReadDto
             {
                 Id = p.Id,

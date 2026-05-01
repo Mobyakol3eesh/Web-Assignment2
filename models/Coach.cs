@@ -8,7 +8,7 @@ public class Coach
     public int Age { get; set; }
 
     public int ExperienceYrs { get; set; }
-     [ForeignKey("TeamId")]
+     [ForeignKey(nameof(Team))]
     public int? TeamId { get; set; }
    
     public Team? Team { get; set; }

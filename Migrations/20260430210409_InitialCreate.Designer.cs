@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace web_assignment.Migrations
+namespace Tuna_SoccerLeague.Migrations
 {
     [DbContext(typeof(TunaLeagueContext))]
-    [Migration("20260321194321_InitialCreate")]
+    [Migration("20260430210409_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace web_assignment.Migrations
                     b.ToTable("Coaches");
                 });
 
-            modelBuilder.Entity("Match", b =>
+            modelBuilder.Entity("Goal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,19 +61,34 @@ namespace web_assignment.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("MatchId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Location")
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScorerName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeScored")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Matches");
+                    b.HasIndex("MatchId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Goals");
                 });
 
-            modelBuilder.Entity("MatchTeam", b =>
+            modelBuilder.Entity("Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,14 +102,18 @@ namespace web_assignment.Migrations
                     b.Property<int>("AwayTeamScore")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
                     b.Property<int>("HomeTeamScore")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchId")
-                        .HasColumnType("int");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
@@ -105,11 +124,9 @@ namespace web_assignment.Migrations
 
                     b.HasIndex("HomeTeamId");
 
-                    b.HasIndex("MatchId");
-
                     b.HasIndex("TeamId");
 
-                    b.ToTable("MatchTeams");
+                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("Player", b =>
@@ -121,6 +138,9 @@ namespace web_assignment.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JerseyNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("MarketValue")
@@ -152,9 +172,6 @@ namespace web_assignment.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Appearances")
-                        .HasColumnType("int");
-
                     b.Property<int>("Assists")
                         .HasColumnType("int");
 
@@ -164,7 +181,19 @@ namespace web_assignment.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PassesCompleted")
+                        .HasColumnType("int");
+
                     b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ShotsOnTarget")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Touches")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -206,7 +235,34 @@ namespace web_assignment.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("MatchTeam", b =>
+            modelBuilder.Entity("Goal", b =>
+                {
+                    b.HasOne("Match", "Match")
+                        .WithMany("Goals")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Player", "Player")
+                        .WithMany("Goals")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team", "Team")
+                        .WithMany("Goals")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Match");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("Match", b =>
                 {
                     b.HasOne("Team", "AwayTeam")
                         .WithMany()
@@ -220,12 +276,6 @@ namespace web_assignment.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Match", "Match")
-                        .WithMany()
-                        .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Team", null)
                         .WithMany("Matches")
                         .HasForeignKey("TeamId");
@@ -233,8 +283,6 @@ namespace web_assignment.Migrations
                     b.Navigation("AwayTeam");
 
                     b.Navigation("HomeTeam");
-
-                    b.Navigation("Match");
                 });
 
             modelBuilder.Entity("Player", b =>
@@ -267,14 +315,23 @@ namespace web_assignment.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("Match", b =>
+                {
+                    b.Navigation("Goals");
+                });
+
             modelBuilder.Entity("Player", b =>
                 {
+                    b.Navigation("Goals");
+
                     b.Navigation("PlayerStats");
                 });
 
             modelBuilder.Entity("Team", b =>
                 {
                     b.Navigation("Coach");
+
+                    b.Navigation("Goals");
 
                     b.Navigation("Matches");
 
