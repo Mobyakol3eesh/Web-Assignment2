@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class MatchController : Controller
+[ApiController]
+public class MatchController : ControllerBase
 {
 	private readonly IMatchService matchService;
 

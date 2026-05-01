@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class GoalController : Controller
+[ApiController]
+public class GoalController : ControllerBase
 {
     private readonly IGoalService goalService;
 

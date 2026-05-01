@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class PlayerController : Controller
+[ApiController]
+public class PlayerController : ControllerBase
 {
     private IPlayerService playerService;
 
@@ -144,25 +145,6 @@ public class PlayerController : Controller
         catch (Exception ex)
         {
             return BadRequest(ex.ToClientMessage());
-        }
-    }
-
-    public async Task<IActionResult> Index()
-    {
-        var players = await playerService.GetAllPlayers();
-        return View(players);  
-    }
-
-    public async Task<IActionResult> Details(int id)
-    {
-        try
-        {
-            var player = await playerService.GetPlayerDetailsById(id);
-            return View(player);
-        }
-        catch (Exception )
-        {
-            return NotFound();
         }
     }
 }

@@ -1,15 +1,17 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-public class TunaLeagueContext : DbContext {
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+public class TunaLeagueContext : IdentityDbContext<ApplicationUser>
+{
     public TunaLeagueContext(DbContextOptions<TunaLeagueContext> options) : base(options) { }
+
     public DbSet<Player> Players { get; set; }
     public DbSet<Team> Teams { get; set; }
-
     public DbSet<Coach> Coaches { get; set; }
-
     public DbSet<Match> Matches { get; set; }
     public DbSet<Goal> Goals { get; set; }
-    
     public DbSet<PlayerStats> PlayerStats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +48,4 @@ public class TunaLeagueContext : DbContext {
             .HasForeignKey(g => g.TeamId)
             .OnDelete(DeleteBehavior.Cascade);
     }
-
-    
 }

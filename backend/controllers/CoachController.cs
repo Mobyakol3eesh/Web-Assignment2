@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class CoachController : Controller
+[ApiController]
+public class CoachController : ControllerBase
 {
     private readonly ICoachService coachService;
 

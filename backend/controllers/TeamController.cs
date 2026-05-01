@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class TeamController : Controller
+[ApiController]
+public class TeamController : ControllerBase
 {
         private readonly ITeamService teamService;
 
@@ -125,23 +126,4 @@ public class TeamController : Controller
        
         return Ok(teams);
     }
-    public async Task<IActionResult> Index()
-    {
-        var teams = await teamService.GetAllTeams();
-        return View(teams);  
-    }
-
-    public async Task<IActionResult> Details(int id)
-    {
-        try
-        {
-            var team = await teamService.GetTeamDetailsById(id);
-            return View(team);
-        }
-        catch (Exception ex)
-        {
-            return NotFound(ex.Message);
-        }
-    }
-
 }

@@ -8,6 +8,7 @@ internal static class WebApplicationExtensions
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Tuna League API v1");
         });
 
+        app.UseCors("AllowSwagger");
         app.UseAuthentication();
         app.UseAuthorization();
 

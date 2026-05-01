@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
 
 internal static class ServiceCollectionExtensions
 {
@@ -11,47 +12,30 @@ internal static class ServiceCollectionExtensions
         services.AddDbContext<TunaLeagueContext>(options =>
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+        // Identity
+        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
+            .AddEntityFrameworkStores<TunaLeagueContext>()
+            .AddDefaultTokenProviders();
+
+
         services.AddControllersWithViews();
 
-        services.AddAuthentication(options =>
-            {
-               
-                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
-                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
-                options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
-                {
-                    OnRedirectToLogin = ctx =>
-                    {
-                        if (ctx.Request.Path.StartsWithSegments("/api") || ctx.Request.Path.StartsWithSegments("/auth"))
-                        {
-                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        }
-                        else
-                        {
-                            ctx.Response.Redirect(ctx.RedirectUri);
-                        }
-                        return Task.CompletedTask;
-                    },
-                    OnRedirectToAccessDenied = ctx =>
-                    {
-                        if (ctx.Request.Path.StartsWithSegments("/api") || ctx.Request.Path.StartsWithSegments("/auth"))
-                        {
-                            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
-                        }
-                        else
-                        {
-                            ctx.Response.Redirect(ctx.RedirectUri);
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-            })
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSwagger", builder =>
+                builder.WithOrigins("http://localhost:5095", "https://localhost:7070", "http://localhost:3000")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials());
+        });
+
+        services.AddAuthentication(Microsoft.AspNetCore.Identity.IdentityConstants.ApplicationScheme)
             // Keep JwtBearer available for non-cookie clients if needed
             .AddJwtBearer(options =>
             {
@@ -90,6 +74,23 @@ internal static class ServiceCollectionExtensions
                 };
             });
 
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = false;
+            options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
+            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+            options.Events.OnRedirectToLogin = ctx =>
+            {
+                ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            };
+            options.Events.OnRedirectToAccessDenied = ctx =>
+            {
+                ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            };
+        });
+
         services.AddAuthorization();
 
         services.AddEndpointsApiExplorer();
@@ -119,8 +120,8 @@ internal static class ServiceCollectionExtensions
             {
                 Type = SecuritySchemeType.ApiKey,
                 In = ParameterLocation.Cookie,
-                Name = ".AspNetCore.Cookies",
-                Description = "Cookie based auth. Set your auth cookie value here (e.g. .AspNetCore.Cookies=<value>)."
+                Name = ".AspNetCore.Identity.Application",
+                Description = "Cookie based auth. Identity cookie automatically captured after login."
             });
 
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -150,12 +151,14 @@ internal static class ServiceCollectionExtensions
                 }
             });
         });
-
+        
+        
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<IPlayerService, PlayerService>();
         services.AddScoped<IMatchService, MatchService>();
         services.AddScoped<ICoachService, CoachService>();
         services.AddScoped<IGoalService, GoalService>();
+        services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
         return services;
     }
