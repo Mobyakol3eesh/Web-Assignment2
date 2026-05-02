@@ -4,7 +4,7 @@ import api from '../services/api'
 
 type Player = { id: number; name: string; age: number; position: string; marketValue: number; teamName: string }
 
-const emptyForm = { name: '', age: 18, position: '', marketValue: 0, teamId: 1 }
+const emptyForm = { name: '', age: 18, position: '', marketValue: 0, teamName: '' }
 
 export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) => {
   const [players, setPlayers] = useState<Player[]>([])
@@ -55,8 +55,8 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} placeholder="Position" />
             <label>Market value</label>
             <input type="number" value={form.marketValue} onChange={(e) => setForm({ ...form, marketValue: Number(e.target.value) })} />
-            <label>Team ID</label>
-            <input type="number" value={form.teamId} onChange={(e) => setForm({ ...form, teamId: Number(e.target.value) })} />
+            <label>Team Name</label>
+            <input value={form.teamName} onChange={(e) => setForm({ ...form, teamName: e.target.value })} placeholder="Team Name" />
             <button type="submit">Save Player</button>
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
@@ -64,16 +64,18 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
           </form>
         )}
 
-        <ul className="scrollable-list">
-          {players.map((p) => (
-            <li key={p.id}>
-              {p.name} - {p.position} - Age {p.age} - Team {p.teamName}{' '}
-              <Link to={`/league/players/${p.id}`}>View details</Link>{' '}
-              <Link to={(readOnly ? '/league' : '/admin') + `/players/${p.id}/stats`}>Stats</Link>{' '}
-              {!readOnly && <button type="button" onClick={() => startEdit(p)}>Edit</button>}
-            </li>
-          ))}
-        </ul>
+        {!editing && (
+          <ul className="scrollable-list">
+            {players.map((p) => (
+              <li key={p.id}>
+                {p.name} - {p.position} - Age {p.age} - Team {p.teamName}{' '}
+                <Link to={`/league/players/${p.id}`}>View details</Link>{' '}
+                <Link to={(readOnly ? '/league' : '/admin') + `/players/${p.id}/stats`}>Stats</Link>{' '}
+                {!readOnly && <button type="button" onClick={() => startEdit(p)}>Edit</button>}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

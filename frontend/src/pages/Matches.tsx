@@ -78,24 +78,26 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
           </form>
         )}
 
-        <ul className="scrollable-list">
-          {matches.map((m) => (
-            <li key={m.id}>
-              {readOnly ? (
-                <>
-                  {m.homeTeamName ?? `Team ${m.homeTeamId}`} vs {m.awayTeamName ?? `Team ${m.awayTeamId}`}{' '}
-                  ({m.homeTeamScore ?? 0} - {m.awayTeamScore ?? 0}) · {new Date(m.date).toLocaleDateString()} · {m.location}
-                </>
-              ) : (
-                <>
-                  {m.location} - {new Date(m.date).toLocaleDateString()} (H{m.homeTeamId} {m.homeTeamScore ?? 0} : {m.awayTeamScore ?? 0} A{m.awayTeamId})
-                </>
-              )}{' '}
-              <Link to={`/league/matches/${m.id}`}>View details</Link>{' '}
-              {!readOnly && <button type="button" onClick={() => startEdit(m)}>Edit</button>}
-            </li>
-          ))}
-        </ul>
+        {!editing && (
+          <ul className="scrollable-list">
+            {matches.map((m) => (
+              <li key={m.id}>
+                {readOnly ? (
+                  <>
+                    {m.homeTeamName ?? `Team ${m.homeTeamId}`} vs {m.awayTeamName ?? `Team ${m.awayTeamId}`}{' '}
+                    ({m.homeTeamScore ?? 0} - {m.awayTeamScore ?? 0}) · {new Date(m.date).toLocaleDateString()} · {m.location}
+                  </>
+                ) : (
+                  <>
+                    {m.location} - {new Date(m.date).toLocaleDateString()} (H{m.homeTeamId} {m.homeTeamScore ?? 0} : {m.awayTeamScore ?? 0} A{m.awayTeamId})
+                  </>
+                )}{' '}
+                <Link to={`/league/matches/${m.id}`}>View details</Link>{' '}
+                {!readOnly && <button type="button" onClick={() => startEdit(m)}>Edit</button>}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

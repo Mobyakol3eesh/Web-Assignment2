@@ -77,17 +77,19 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
           </form>
         )}
 
-        <ul className="scrollable-list">
-          {stats.map((s) => (
-            <li key={s.id} className={readOnly ? 'readonly' : ''}>
-              {readOnly
-                ? `Goals ${s.goals ?? 0} · Assists ${s.assists ?? 0} · SOT ${s.shotsOnTarget ?? 0} · Touches ${s.touches ?? 0} · Passes ${s.passesCompleted ?? 0} · Score ${s.score ?? 0}`
-                : `Player ${s.playerId} Match ${s.matchId} Score ${s.score ?? 0}`}{' '}
-              <Link to={`/league/player-stats/${s.id}`}>View details</Link>{' '}
-              {!readOnly && <button type="button" onClick={() => startEdit(s)}>Edit</button>}
-            </li>
-          ))}
-        </ul>
+        {!editing && (
+          <ul className="scrollable-list">
+            {stats.map((s) => (
+              <li key={s.id} className={readOnly ? 'readonly' : ''}>
+                {readOnly
+                  ? `Goals ${s.goals ?? 0} · Assists ${s.assists ?? 0} · SOT ${s.shotsOnTarget ?? 0} · Touches ${s.touches ?? 0} · Passes ${s.passesCompleted ?? 0} · Score ${s.score ?? 0}`
+                  : `Player ${s.playerId} Match ${s.matchId} Score ${s.score ?? 0}`}{' '}
+                <Link to={`/league/player-stats/${s.id}`}>View details</Link>{' '}
+                {!readOnly && <button type="button" onClick={() => startEdit(s)}>Edit</button>}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

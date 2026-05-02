@@ -67,15 +67,17 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
           </form>
         )}
 
-        <ul className="scrollable-list">
-          {teams.map((t) => (
-            <li key={t.id}>
-              {t.name} (Points: {t.points ?? 0}){!readOnly && ` Team ID: ${t.id}`}{' '}
-              <Link to={`/league/teams/${t.id}`}>View details</Link>{' '}
-              {!readOnly && <button type="button" onClick={() => startEdit(t)}>Edit</button>}
-            </li>
-          ))}
-        </ul>
+        {!editing && (
+          <ul className="scrollable-list">
+            {teams.map((t) => (
+              <li key={t.id}>
+                {t.name} (Points: {t.points ?? 0}){!readOnly && ` Team ID: ${t.id}`}{' '}
+                <Link to={`/league/teams/${t.id}`}>View details</Link>{' '}
+                {!readOnly && <button type="button" onClick={() => startEdit(t)}>Edit</button>}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

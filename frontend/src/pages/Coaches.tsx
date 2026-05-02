@@ -61,17 +61,19 @@ export const Coaches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
           </form>
         )}
 
-        <ul className="scrollable-list">
-          {coaches.map((c) => (
-            <li key={c.id} className={readOnly ? 'readonly' : ''}>
-              {readOnly
-                ? `${c.name} · Age ${c.age ?? 'N/A'} · ${c.experienceYrs ?? 0} yrs exp`
-                : `${c.name} (Exp: ${c.experienceYrs})`}{' '}
-              <Link to={`/league/coaches/${c.id}`}>View details</Link>{' '}
-              {!readOnly && <button type="button" onClick={() => startEdit(c)}>Edit</button>}
-            </li>
-          ))}
-        </ul>
+        {!editing && (
+          <ul className="scrollable-list">
+            {coaches.map((c) => (
+              <li key={c.id} className={readOnly ? 'readonly' : ''}>
+                {readOnly
+                  ? `${c.name} · Age ${c.age ?? 'N/A'} · ${c.experienceYrs ?? 0} yrs exp`
+                  : `${c.name} (Exp: ${c.experienceYrs})`}{' '}
+                <Link to={`/league/coaches/${c.id}`}>View details</Link>{' '}
+                {!readOnly && <button type="button" onClick={() => startEdit(c)}>Edit</button>}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )
