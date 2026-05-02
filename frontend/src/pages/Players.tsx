@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import api from '../api'
+import api from '../services/api'
 
 type Player = { id: number; name: string; age: number; position: string; marketValue: number; teamName: string }
 
@@ -18,13 +18,10 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
 
   useEffect(() => { load() }, [])
 
-  const submit = async (e: React.FormEvent) => {
+  const saveEdit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (editing) {
-      await api.put(`/players/${editing.id}`, form)
-    } else {
-      await api.post('/players', form)
-    }
+    if (!editing) return
+    await api.put(`/players/${editing.id}`, form)
     setForm({ ...emptyForm })
     setEditing(null)
     load()
@@ -43,10 +40,13 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
 
   return (
     <div className="page">
-      <h2>Players</h2>
+      <div className="card-header">
+        <h2>Players</h2>
+        {!readOnly && <Link to="/admin/players/new">Create Player</Link>}
+      </div>
       <div className="split-horizontal">
-        {!readOnly && (
-          <form onSubmit={submit}>
+        {!readOnly && editing && (
+          <form onSubmit={saveEdit}>
             <label>Name</label>
             <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Name" />
             <label>Age</label>
@@ -57,12 +57,10 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input type="number" value={form.marketValue} onChange={(e) => setForm({ ...form, marketValue: Number(e.target.value) })} />
             <label>Team ID</label>
             <input type="number" value={form.teamId} onChange={(e) => setForm({ ...form, teamId: Number(e.target.value) })} />
-            <button type="submit">{editing ? 'Save' : 'Create'} Player</button>
-            {editing && (
-              <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
-                Cancel
-              </button>
-            )}
+            <button type="submit">Save Player</button>
+            <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
+              Cancel
+            </button>
           </form>
         )}
 
@@ -70,6 +68,7 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
           {players.map((p) => (
             <li key={p.id}>
               {p.name} - {p.position} - Age {p.age} - Team {p.teamName}{' '}
+              <Link to={`/league/players/${p.id}`}>View details</Link>{' '}
               <Link to={(readOnly ? '/league' : '/admin') + `/players/${p.id}/stats`}>Stats</Link>{' '}
               {!readOnly && <button type="button" onClick={() => startEdit(p)}>Edit</button>}
             </li>

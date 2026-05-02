@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import api from '../api'
+import { Link } from 'react-router-dom'
+import api from '../services/api'
 
 type Match = {
   id: number
@@ -27,14 +28,11 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
 
   useEffect(() => { load() }, [])
 
-  const submit = async (e: React.FormEvent) => {
+  const saveEdit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!editing) return
     const payload = { ...form, date: new Date(form.date) }
-    if (editing) {
-      await api.put(`/matches/${editing.id}`, payload)
-    } else {
-      await api.post('/matches', payload)
-    }
+    await api.put(`/matches/${editing.id}`, payload)
     setForm({ ...emptyForm })
     setEditing(null)
     load()
@@ -54,10 +52,13 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
 
   return (
     <div className="page">
-      <h2>Matches</h2>
+      <div className="card-header">
+        <h2>Matches</h2>
+        {!readOnly && <Link to="/admin/matches/new">Create Match</Link>}
+      </div>
       <div className="split-horizontal">
-        {!readOnly && (
-          <form onSubmit={submit}>
+        {!readOnly && editing && (
+          <form onSubmit={saveEdit}>
             <label>Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
             <label>Location</label>
@@ -70,12 +71,10 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input type="number" value={form.homeTeamScore} onChange={(e) => setForm({ ...form, homeTeamScore: Number(e.target.value) })} />
             <label>Away team score</label>
             <input type="number" value={form.awayTeamScore} onChange={(e) => setForm({ ...form, awayTeamScore: Number(e.target.value) })} />
-            <button type="submit">{editing ? 'Save' : 'Create'} Match</button>
-            {editing && (
-              <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
-                Cancel
-              </button>
-            )}
+            <button type="submit">Save Match</button>
+            <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
+              Cancel
+            </button>
           </form>
         )}
 
@@ -92,6 +91,7 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
                   {m.location} - {new Date(m.date).toLocaleDateString()} (H{m.homeTeamId} {m.homeTeamScore ?? 0} : {m.awayTeamScore ?? 0} A{m.awayTeamId})
                 </>
               )}{' '}
+              <Link to={`/league/matches/${m.id}`}>View details</Link>{' '}
               {!readOnly && <button type="button" onClick={() => startEdit(m)}>Edit</button>}
             </li>
           ))}

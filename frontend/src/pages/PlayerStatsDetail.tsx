@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import api from '../api'
+import api from '../services/api'
 
 type Player = { id: number; name: string; teamName: string }
 

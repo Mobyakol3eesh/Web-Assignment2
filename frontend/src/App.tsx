@@ -13,6 +13,19 @@ import { Goals } from './pages/Goals'
 import { Coaches } from './pages/Coaches'
 import { PlayerStats } from './pages/PlayerStats'
 import { PlayerStatsDetail } from './pages/PlayerStatsDetail'
+import { Home } from './pages/Home'
+import { CreatePlayer } from './pages/CreatePlayer'
+import { CreateTeam } from './pages/CreateTeam'
+import { CreateMatch } from './pages/CreateMatch'
+import { CreateGoal } from './pages/CreateGoal'
+import { CreateCoach } from './pages/CreateCoach'
+import { CreatePlayerStats } from './pages/CreatePlayerStats'
+import { TeamDetail } from './pages/TeamDetail'
+import { PlayerDetail } from './pages/PlayerDetail'
+import { MatchDetail } from './pages/MatchDetail'
+import { GoalDetail } from './pages/GoalDetail'
+import { CoachDetail } from './pages/CoachDetail'
+import { PlayerStatDetail } from './pages/PlayerStatDetail'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AdminRoute } from './components/AdminRoute'
 
@@ -22,6 +35,7 @@ function App() {
       <NavBar />
       <main className="container">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -41,10 +55,26 @@ function App() {
             }
           />
           <Route
+            path="/league/teams/:teamId"
+            element={
+              <ProtectedRoute>
+                <TeamDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/league/players"
             element={
               <ProtectedRoute>
                 <Players readOnly />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/league/players/:playerId"
+            element={
+              <ProtectedRoute>
+                <PlayerDetail />
               </ProtectedRoute>
             }
           />
@@ -57,10 +87,26 @@ function App() {
             }
           />
           <Route
+            path="/league/matches/:matchId"
+            element={
+              <ProtectedRoute>
+                <MatchDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/league/goals"
             element={
               <ProtectedRoute>
                 <Goals readOnly />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/league/goals/:goalId"
+            element={
+              <ProtectedRoute>
+                <GoalDetail />
               </ProtectedRoute>
             }
           />
@@ -73,6 +119,30 @@ function App() {
             }
           />
           <Route
+            path="/league/coaches/:coachId"
+            element={
+              <ProtectedRoute>
+                <CoachDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/league/player-stats"
+            element={
+              <ProtectedRoute>
+                <PlayerStats readOnly />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/league/player-stats/:statId"
+            element={
+              <ProtectedRoute>
+                <PlayerStatDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/league/players/:playerId/stats"
             element={
               <ProtectedRoute>
@@ -80,13 +150,20 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/league" replace />} />
           
           <Route
             path="/admin/teams"
             element={
               <AdminRoute>
                 <Teams />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/teams/new"
+            element={
+              <AdminRoute>
+                <CreateTeam />
               </AdminRoute>
             }
           />
@@ -99,10 +176,26 @@ function App() {
             }
           />
           <Route
+            path="/admin/players/new"
+            element={
+              <AdminRoute>
+                <CreatePlayer />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="/admin/matches"
             element={
               <AdminRoute>
                 <Matches />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/matches/new"
+            element={
+              <AdminRoute>
+                <CreateMatch />
               </AdminRoute>
             }
           />
@@ -115,10 +208,26 @@ function App() {
             }
           />
           <Route
+            path="/admin/goals/new"
+            element={
+              <AdminRoute>
+                <CreateGoal />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="/admin/coaches"
             element={
               <AdminRoute>
                 <Coaches />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/coaches/new"
+            element={
+              <AdminRoute>
+                <CreateCoach />
               </AdminRoute>
             }
           />
@@ -131,6 +240,14 @@ function App() {
             }
           />
           <Route
+            path="/admin/player-stats/new"
+            element={
+              <AdminRoute>
+                <CreatePlayerStats />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="/admin/players/:playerId/stats"
             element={
               <AdminRoute>
@@ -138,7 +255,7 @@ function App() {
               </AdminRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/league" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>

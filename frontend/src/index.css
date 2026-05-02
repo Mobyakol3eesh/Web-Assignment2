@@ -108,6 +108,10 @@ a { color: var(--ink); text-decoration: none; }
   margin-bottom: 1rem;
 }
 
+.page form.stack {
+  grid-template-columns: 1fr;
+}
+
 .page form label {
   grid-column: 1 / -1;
   font-size: 0.85rem;
@@ -132,6 +136,19 @@ a { color: var(--ink); text-decoration: none; }
   cursor: pointer;
 }
 
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.button-row a {
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+}
+
 .page ul { list-style: none; padding: 0; margin: 0; }
 
 .page li {
@@ -150,6 +167,7 @@ a { color: var(--ink); text-decoration: none; }
 .page li:last-child { border-bottom: none; }
 
 .error { color: #b91c1c; font-weight: 600; }
+.success { color: #15803d; font-weight: 600; }
 
 .split-horizontal {
   display: flex;

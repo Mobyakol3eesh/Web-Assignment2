@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthProvider'
 
 export const Register: React.FC = () => {
@@ -17,6 +17,10 @@ export const Register: React.FC = () => {
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Register failed')
     }
+  }
+
+  if (auth.isAuthenticated) {
+    return <Navigate to="/league" replace />
   }
 
   return (

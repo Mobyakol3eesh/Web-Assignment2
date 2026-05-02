@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import api from '../api'
+import api from '../services/api'
 
 type Team = { id: number; name: string; points?: number }
 

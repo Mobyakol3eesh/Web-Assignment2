@@ -14,11 +14,11 @@ const NavBar: React.FC = () => {
   return (
     <nav className="nav">
       <div className="nav-left">
-        {auth.isAuthenticated && (
+        <Link to="/">Home</Link>
+        {auth.isAuthenticated && auth.role !== 'Admin' && (
           <>
             <Link to="/league">League</Link>
             <Link to="/league/teams">Teams</Link>
-            <Link to="/league/players">Players</Link>
             <Link to="/league/matches">Matches</Link>
             <Link to="/league/goals">Goals</Link>
             <Link to="/league/coaches">Coaches</Link>
