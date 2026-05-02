@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../services/api'
 import { DetailLayout } from '../components/DetailLayout'
+import type { AxiosError } from 'axios'
 
 type Team = { id: number; name: string; points?: number }
 
@@ -20,7 +21,9 @@ export const TeamDetail: React.FC = () => {
       const teams = (res.data || []) as Team[]
       setTeam(teams.find((t) => t.id === teamId) ?? null)
     } catch (err) {
-      setError('Unable to load team details.')
+      const axiosErr = err as AxiosError;
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load team details.' + msg)
     } finally {
       setLoading(false)
     }

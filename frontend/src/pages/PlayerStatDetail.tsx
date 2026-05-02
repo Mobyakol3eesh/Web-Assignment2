@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../services/api'
 import { DetailLayout } from '../components/DetailLayout'
+import type { AxiosError } from 'axios'
 
 type Stats = {
   id: number
@@ -30,7 +31,9 @@ export const PlayerStatDetail: React.FC = () => {
       const stats = (res.data || []) as Stats[]
       setStat(stats.find((s) => s.id === statId) ?? null)
     } catch (err) {
-      setError('Unable to load player stats details.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load player stats details. ' + msg)
     } finally {
       setLoading(false)
     }

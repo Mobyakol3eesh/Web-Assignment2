@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../services/api'
 import { DetailLayout } from '../components/DetailLayout'
+import type { AxiosError } from 'axios'
 
 type Match = {
   id: number
@@ -30,7 +31,9 @@ export const MatchDetail: React.FC = () => {
       const matches = (res.data || []) as Match[]
       setMatch(matches.find((m) => m.id === matchId) ?? null)
     } catch (err) {
-      setError('Unable to load match details.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load match details. ' + msg)
     } finally {
       setLoading(false)
     }

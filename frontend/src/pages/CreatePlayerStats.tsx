@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type PlayerStatsForm = {
   playerId: number
@@ -41,7 +42,9 @@ export const CreatePlayerStats: React.FC = () => {
       setSuccess('Player stats created successfully.')
       setForm({ ...emptyForm })
     } catch (err) {
-      setError('Unable to create player stats. Check the form values and try again.')
+        const axiosErr = err as AxiosError;
+        const msg = axiosErr.response?.data ?? ''
+      setError('Unable to create player stats. Check the form values and try again.' + msg)
     } finally {
       setLoading(false)
     }

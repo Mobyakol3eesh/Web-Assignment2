@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type Team = { id: number; name: string; points?: number }
 
@@ -59,7 +60,9 @@ export const LeagueDashboard: React.FC = () => {
       })
       setMvps(mvpMap)
     } catch (err) {
-      setError('Unable to load league data.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load league data. ' + msg)
     } finally {
       setLoading(false)
     }

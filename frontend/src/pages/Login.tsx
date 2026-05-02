@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthProvider'
+import type { AxiosError } from 'axios'
 
 export const Login: React.FC = () => {
   const auth = useAuth()
@@ -14,8 +15,10 @@ export const Login: React.FC = () => {
     try {
       await auth.login(username, password)
       navigate('/')
-    } catch (err: any) {
-      setError(err?.response?.data?.message || 'Login failed')
+    } catch (err) {
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Login failed ' + msg)
     }
   }
 

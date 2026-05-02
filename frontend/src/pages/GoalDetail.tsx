@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../services/api'
 import { DetailLayout } from '../components/DetailLayout'
+import type { AxiosError } from 'axios'
 
 type Goal = { id: number; teamName: string; timeScored: string; scorerName: string }
 
@@ -20,7 +21,9 @@ export const GoalDetail: React.FC = () => {
       const goals = (res.data || []) as Goal[]
       setGoal(goals.find((g) => g.id === goalId) ?? null)
     } catch (err) {
-      setError('Unable to load goal details.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load goal details. ' + msg)
     } finally {
       setLoading(false)
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type Match = {
   id: number
@@ -45,7 +46,9 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
       setEditing(null)
       load()
     } catch (err) {
-      setError('Unable to save match. Try again.')
+      const axiosErr = err as AxiosError;
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to save match. Try again.' + msg)
     } finally {
       setSaving(false)
     }

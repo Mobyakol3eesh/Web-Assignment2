@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type CoachForm = {
   name: string
@@ -33,7 +34,9 @@ export const CreateCoach: React.FC = () => {
       setSuccess('Coach created successfully.')
       setForm({ ...emptyForm })
     } catch (err) {
-      setError('Unable to create coach. Check the form values and try again.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to create coach. Check the form values and try again. ' + msg)
     } finally {
       setLoading(false)
     }

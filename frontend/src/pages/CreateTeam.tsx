@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type TeamForm = {
   name: string
@@ -27,7 +28,9 @@ export const CreateTeam: React.FC = () => {
       setSuccess('Team created successfully.')
       setForm({ ...emptyForm })
     } catch (err) {
-      setError('Unable to create team. Check the form values and try again.')
+    const axiosErr = err as AxiosError;
+    const msg = axiosErr.response?.data ?? ''
+      setError('Unable to create team. Check the form values and try again.' + msg)
     } finally {
       setLoading(false)
     }

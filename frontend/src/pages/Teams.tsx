@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type Team = { id: number; name: string; points?: number }
 
@@ -42,7 +43,9 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
       setPoints(0)
       load()
     } catch (err) {
-      setError('Unable to save team. Try again.')
+      const axiosErr = err as AxiosError;
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to save team. Try again.' + msg)
     } finally {
       setSaving(false)
     }
@@ -54,7 +57,9 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
       await api.delete(`/teams/${id}`)
       setTeams((s) => s.filter((t) => t.id !== id))
     } catch (err) {
-      alert('Delete failed')
+      const axiosErr = err as AxiosError;
+      const msg = axiosErr.response?.data ?? ''
+      alert('Delete failed: ' + msg)
     }
   }
 

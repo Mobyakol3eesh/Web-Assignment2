@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type Player = { id: number; name: string; teamName: string }
 
@@ -40,7 +41,9 @@ export const PlayerStatsDetail: React.FC<Props> = ({ isAdmin = false }) => {
       const allStats = (statsRes.data || []) as Stats[]
       setStats(allStats.filter((s) => s.playerId === playerId))
     } catch (err) {
-      setError('Unable to load player stats.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to load player stats. ' + msg)
     } finally {
       setLoading(false)
     }

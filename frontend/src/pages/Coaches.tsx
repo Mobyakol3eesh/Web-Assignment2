@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
+import type { AxiosError } from 'axios'
 
 type Coach = { id: number; name: string; age?: number; experienceYrs?: number; teamId?: number }
 
@@ -35,7 +36,9 @@ export const Coaches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
       setEditing(null)
       load()
     } catch (err) {
-      setError('Unable to save coach. Try again.')
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Unable to save coach. Try again. ' + msg)
     } finally {
       setSaving(false)
     }

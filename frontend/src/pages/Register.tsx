@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthProvider'
+import type { AxiosError } from 'axios'
 
 export const Register: React.FC = () => {
   const auth = useAuth()
@@ -14,8 +15,10 @@ export const Register: React.FC = () => {
     try {
       await auth.register(username, password)
       navigate('/')
-    } catch (err: any) {
-      setError(err?.response?.data?.message || 'Register failed')
+    } catch (err) {
+      const axiosErr = err as AxiosError
+      const msg = axiosErr.response?.data ?? ''
+      setError('Register failed ' + msg)
     }
   }
 
