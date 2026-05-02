@@ -176,6 +176,25 @@ public class MatchService : IMatchService
         await tunaLeagueContext.SaveChangesAsync();
     }
 
+    public async Task DeleteMatch(int id)
+    {
+        var match = await tunaLeagueContext.Matches.FirstOrDefaultAsync(m => m.Id == id);
+        if (match == null)
+            throw new Exception("Match not found");
+
+        // Remove goals for the match
+        var goals = tunaLeagueContext.Goals.Where(g => g.MatchId == id);
+        tunaLeagueContext.Goals.RemoveRange(goals);
+
+        // Remove player stats for the match
+        var stats = tunaLeagueContext.PlayerStats.Where(ps => ps.MatchId == id);
+        tunaLeagueContext.PlayerStats.RemoveRange(stats);
+
+        // Remove the match
+        tunaLeagueContext.Matches.Remove(match);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
+
     
 }
     

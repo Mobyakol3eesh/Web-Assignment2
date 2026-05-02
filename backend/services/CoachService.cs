@@ -120,4 +120,14 @@ public class CoachService : ICoachService
 
         await tunaLeagueContext.SaveChangesAsync();
     }
+
+    public async Task DeleteCoach(int id)
+    {
+        var coach = await tunaLeagueContext.Coaches.FirstOrDefaultAsync(c => c.Id == id);
+        if (coach == null)
+            throw new Exception("Coach not found");
+
+        tunaLeagueContext.Coaches.Remove(coach);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
 }

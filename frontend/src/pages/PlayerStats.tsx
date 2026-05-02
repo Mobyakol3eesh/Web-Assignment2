@@ -20,6 +20,9 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
   const [stats, setStats] = useState<Stats[]>([])
   const [updateForm, setUpdateForm] = useState({ ...emptyUpdate })
   const [editing, setEditing] = useState<Stats | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
     const res = await api.get('/players/player-stats')
@@ -31,10 +34,20 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!editing) return
-    await api.put(`/players/player-stats/${editing.id}`, updateForm)
-    setUpdateForm({ ...emptyUpdate })
-    setEditing(null)
-    load()
+    setSaving(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await api.put(`/players/player-stats/${editing.id}`, updateForm)
+      setSuccess('Player stats updated successfully.')
+      setUpdateForm({ ...emptyUpdate })
+      setEditing(null)
+      load()
+    } catch (err) {
+      setError('Unable to save player stats. Try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const startEdit = (s: Stats) => {
@@ -47,6 +60,16 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
       passesCompleted: s.passesCompleted ?? 0,
       score: s.score ?? 0,
     })
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Delete this player stats record?')) return
+    try {
+      await api.delete(`/players/player-stats/${id}`)
+      setStats((s) => s.filter((x) => x.id !== id))
+    } catch (err) {
+      alert('Delete failed')
+    }
   }
 
   return (
@@ -74,6 +97,9 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
             <button type="button" onClick={() => { setEditing(null); setUpdateForm({ ...emptyUpdate }) }}>
               Cancel
             </button>
+            {saving && <p>Saving...</p>}
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
           </form>
         )}
 
@@ -86,6 +112,7 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
                   : `Player ${s.playerId} Match ${s.matchId} Score ${s.score ?? 0}`}{' '}
                 <Link to={`/league/player-stats/${s.id}`}>View details</Link>{' '}
                 {!readOnly && <button type="button" onClick={() => startEdit(s)}>Edit</button>}
+                {!readOnly && <button type="button" onClick={() => handleDelete(s.id)}>Delete</button>}
               </li>
             ))}
           </ul>

@@ -126,4 +126,20 @@ public class TeamController : ControllerBase
        
         return Ok(teams);
     }
+
+    [HttpDelete("teams/{id}")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerOperation(Summary = "Delete team", Description = "Deletes a team and related data by id.")]
+    public async Task<ActionResult> DeleteTeam(int id)
+    {
+        try
+        {
+            await teamService.DeleteTeam(id);
+            return Ok("Team deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.ToClientMessage());
+        }
+    }
 }

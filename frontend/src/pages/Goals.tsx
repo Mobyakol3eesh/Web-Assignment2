@@ -6,6 +6,9 @@ type Goal = { id: number; playerId: number; matchId: number; teamId: number; tim
 
 export const Goals: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) => {
   const [goals, setGoals] = useState<Goal[]>([])
+  const [deleteLoading, setDeleteLoading] = useState<number | null>(null)
+  const [deleteSuccess, setDeleteSuccess] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const load = async () => {
     const res = await api.get('/goals')
@@ -26,9 +29,35 @@ export const Goals: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
             <li key={g.id}>
               Player: {g.scorerName} scored at {new Date(g.timeScored).toLocaleTimeString()}{' '}
               <Link to={`/league/goals/${g.id}`}>View details</Link>
+              {!readOnly && (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (!window.confirm('Delete this goal?')) return
+                    setDeleteLoading(g.id)
+                    setDeleteSuccess(null)
+                    setDeleteError(null)
+                    try {
+                      await api.delete(`/goals/${g.id}`)
+                      setGoals((s) => s.filter(x => x.id !== g.id))
+                      setDeleteSuccess('Goal deleted successfully.')
+                    } catch {
+                      setDeleteError('Delete failed')
+                    } finally {
+                      setDeleteLoading(null)
+                    }
+                  }}
+                  disabled={deleteLoading === g.id}
+                >
+                  {deleteLoading === g.id ? 'Deleting...' : 'Delete'}
+                </button>
+              )}
             </li>
           ))}
         </ul>
+        {deleteLoading && <p>Deleting...</p>}
+        {deleteSuccess && <p className="success">{deleteSuccess}</p>}
+        {deleteError && <p className="error">{deleteError}</p>}
       </div>
     </div>
   )

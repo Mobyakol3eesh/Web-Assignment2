@@ -9,6 +9,9 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
   const [name, setName] = useState('')
   const [points, setPoints] = useState<number>(0)
   const [editing, setEditing] = useState<Team | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
     const res = await api.get('/teams')
@@ -28,11 +31,31 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
   const saveEdit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!editing) return
-    await api.put(`/teams/${editing.id}`, { name, points })
-    setEditing(null)
-    setName('')
-    setPoints(0)
-    load()
+    setSaving(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await api.put(`/teams/${editing.id}`, { name, points })
+      setSuccess('Team updated successfully.')
+      setEditing(null)
+      setName('')
+      setPoints(0)
+      load()
+    } catch (err) {
+      setError('Unable to save team. Try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Delete this team? This will remove related data.')) return
+    try {
+      await api.delete(`/teams/${id}`)
+      setTeams((s) => s.filter((t) => t.id !== id))
+    } catch (err) {
+      alert('Delete failed')
+    }
   }
 
   return (
@@ -64,6 +87,9 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
             >
               Cancel
             </button>
+            {saving && <p>Saving...</p>}
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
           </form>
         )}
 
@@ -74,6 +100,7 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
                 {t.name} (Points: {t.points ?? 0}){!readOnly && ` Team ID: ${t.id}`}{' '}
                 <Link to={`/league/teams/${t.id}`}>View details</Link>{' '}
                 {!readOnly && <button type="button" onClick={() => startEdit(t)}>Edit</button>}
+                {!readOnly && <button type="button" onClick={() => handleDelete(t.id)}>Delete</button>}
               </li>
             ))}
           </ul>

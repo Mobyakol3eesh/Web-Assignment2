@@ -78,6 +78,22 @@ public class MatchController : ControllerBase
 			return BadRequest(ex.ToClientMessage());
 		}
 	}
+
+	[HttpDelete("matches/{id}")]
+	[Authorize(Roles = "Admin")]
+	[SwaggerOperation(Summary = "Delete match", Description = "Deletes a match and its related data by id.")]
+	public async Task<ActionResult> DeleteMatch(int id)
+	{
+		try
+		{
+			await matchService.DeleteMatch(id);
+			return Ok("Match deleted successfully.");
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(ex.ToClientMessage());
+		}
+	}
 }
 
 

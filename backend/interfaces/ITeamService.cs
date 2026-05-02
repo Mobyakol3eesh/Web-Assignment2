@@ -17,5 +17,7 @@ public interface ITeamService
     Task<CoachReadDto> GetTeamCoach(int teamId);
 
 
-    
+    Task DeleteTeam(int id);
 }
+
+    

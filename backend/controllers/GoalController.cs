@@ -75,4 +75,20 @@ public class GoalController : ControllerBase
             return BadRequest(ex.ToClientMessage());
         }
     }
+
+    [HttpDelete("goals/{id}")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerOperation(Summary = "Delete goal", Description = "Deletes a goal record by id.")]
+    public async Task<ActionResult> DeleteGoal(int id)
+    {
+        try
+        {
+            await goalService.DeleteGoal(id);
+            return Ok("Goal deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.ToClientMessage());
+        }
+    }
 }

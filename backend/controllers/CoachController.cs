@@ -78,4 +78,20 @@ public class CoachController : ControllerBase
             return BadRequest(ex.ToClientMessage());
         }
     }
+
+    [HttpDelete("coaches/{id}")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerOperation(Summary = "Delete coach", Description = "Deletes a coach by id.")]
+    public async Task<ActionResult> DeleteCoach(int id)
+    {
+        try
+        {
+            await coachService.DeleteCoach(id);
+            return Ok("Coach deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.ToClientMessage());
+        }
+    }
 }

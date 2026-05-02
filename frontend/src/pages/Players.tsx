@@ -10,6 +10,9 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
   const [players, setPlayers] = useState<Player[]>([])
   const [form, setForm] = useState({ ...emptyForm })
   const [editing, setEditing] = useState<Player | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
     const res = await api.get('/players')
@@ -21,10 +24,20 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
   const saveEdit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!editing) return
-    await api.put(`/players/${editing.id}`, form)
-    setForm({ ...emptyForm })
-    setEditing(null)
-    load()
+    setSaving(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await api.put(`/players/${editing.id}`, form)
+      setSuccess('Player updated successfully.')
+      setForm({ ...emptyForm })
+      setEditing(null)
+      load()
+    } catch (err) {
+      setError('Unable to save player. Try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const startEdit = (p: Player) => {
@@ -36,6 +49,16 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
       marketValue: p.marketValue,
       teamName: p.teamName ?? '',
     })
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Delete this player and related records?')) return
+    try {
+      await api.delete(`/players/${id}`)
+      setPlayers((s) => s.filter((p) => p.id !== id))
+    } catch (err) {
+      alert('Delete failed')
+    }
   }
 
   return (
@@ -61,6 +84,9 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
             </button>
+            {saving && <p>Saving...</p>}
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
           </form>
         )}
 
@@ -72,6 +98,7 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
                 <Link to={`/league/players/${p.id}`}>View details</Link>{' '}
                 <Link to={(readOnly ? '/league' : '/admin') + `/players/${p.id}/stats`}>Stats</Link>{' '}
                 {!readOnly && <button type="button" onClick={() => startEdit(p)}>Edit</button>}
+                {!readOnly && <button type="button" onClick={() => handleDelete(p.id)}>Delete</button>}
               </li>
             ))}
           </ul>

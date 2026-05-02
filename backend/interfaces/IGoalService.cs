@@ -5,4 +5,6 @@ public interface IGoalService
     Task<IEnumerable<GoalReadDto>> GetGoalsByMatch(int matchId);
     Task<IEnumerable<GoalReadDto>> GetGoalsByTeam(int teamId);
     Task CreateGoal(CreateGoalDto dto);
+
+    Task DeleteGoal(int id);
 }

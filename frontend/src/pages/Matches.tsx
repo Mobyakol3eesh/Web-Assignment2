@@ -20,6 +20,9 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
   const [matches, setMatches] = useState<Match[]>([])
   const [form, setForm] = useState({ ...emptyForm })
   const [editing, setEditing] = useState<Match | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
     const res = await api.get('/matches')
@@ -32,10 +35,20 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
     e.preventDefault()
     if (!editing) return
     const payload = { ...form, date: new Date(form.date) }
-    await api.put(`/matches/${editing.id}`, payload)
-    setForm({ ...emptyForm })
-    setEditing(null)
-    load()
+    setSaving(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await api.put(`/matches/${editing.id}`, payload)
+      setSuccess('Match updated successfully.')
+      setForm({ ...emptyForm })
+      setEditing(null)
+      load()
+    } catch (err) {
+      setError('Unable to save match. Try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const startEdit = (m: Match) => {
@@ -48,6 +61,16 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
       homeTeamScore: m.homeTeamScore ?? 0,
       awayTeamScore: m.awayTeamScore ?? 0,
     })
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Delete this match and related data?')) return
+    try {
+      await api.delete(`/matches/${id}`)
+      setMatches((s) => s.filter((m) => m.id !== id))
+    } catch (err) {
+      alert('Delete failed')
+    }
   }
 
   return (
@@ -75,6 +98,9 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
             </button>
+            {saving && <p>Saving...</p>}
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
           </form>
         )}
 
@@ -94,6 +120,7 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
                 )}{' '}
                 <Link to={`/league/matches/${m.id}`}>View details</Link>{' '}
                 {!readOnly && <button type="button" onClick={() => startEdit(m)}>Edit</button>}
+                {!readOnly && <button type="button" onClick={() => handleDelete(m.id)}>Delete</button>}
               </li>
             ))}
           </ul>

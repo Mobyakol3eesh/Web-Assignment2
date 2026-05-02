@@ -232,5 +232,49 @@ public class TeamService : ITeamService
         return mostValuablePlayer;
     }
 
+    public async Task DeleteTeam(int id)
+    {
+        var team = await tunaLeagueContext.Teams.FirstOrDefaultAsync(t => t.Id == id);
+        if (team == null)
+            throw new Exception("Team not found");
+
+        // Delete players and their related data
+        var players = await tunaLeagueContext.Players.Where(p => p.TeamId == id).ToListAsync();
+        foreach (var player in players)
+        {
+            var playerStats = tunaLeagueContext.PlayerStats.Where(ps => ps.PlayerId == player.Id);
+            tunaLeagueContext.PlayerStats.RemoveRange(playerStats);
+
+            var playerGoals = tunaLeagueContext.Goals.Where(g => g.PlayerId == player.Id);
+            tunaLeagueContext.Goals.RemoveRange(playerGoals);
+        }
+        tunaLeagueContext.Players.RemoveRange(players);
+
+        // Delete goals associated with the team
+        var teamGoals = tunaLeagueContext.Goals.Where(g => g.TeamId == id);
+        tunaLeagueContext.Goals.RemoveRange(teamGoals);
+
+        // Delete matches involving the team (and their related data)
+        var matches = await tunaLeagueContext.Matches.Where(m => m.HomeTeamId == id || m.AwayTeamId == id).ToListAsync();
+        foreach (var match in matches)
+        {
+            var matchGoals = tunaLeagueContext.Goals.Where(g => g.MatchId == match.Id);
+            tunaLeagueContext.Goals.RemoveRange(matchGoals);
+
+            var matchStats = tunaLeagueContext.PlayerStats.Where(ps => ps.MatchId == match.Id);
+            tunaLeagueContext.PlayerStats.RemoveRange(matchStats);
+        }
+        tunaLeagueContext.Matches.RemoveRange(matches);
+
+        // Delete coach if assigned
+        var coach = await tunaLeagueContext.Coaches.FirstOrDefaultAsync(c => c.TeamId == id);
+        if (coach != null)
+            tunaLeagueContext.Coaches.Remove(coach);
+
+        // Finally delete team
+        tunaLeagueContext.Teams.Remove(team);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
+
     
 }

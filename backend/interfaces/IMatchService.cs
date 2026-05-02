@@ -5,4 +5,6 @@ public interface IMatchService
     Task<MatchReadDto> GetMatchDetailsById(int id);
     Task CreateMatch(CreateMatchDto dto);
     Task UpdateMatch(int id, UpdateMatchDto dto);
+
+    Task DeleteMatch(int id);
 }

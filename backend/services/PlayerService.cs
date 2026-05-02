@@ -189,5 +189,38 @@ public class PlayerService : IPlayerService
 
         await tunaLeagueContext.SaveChangesAsync();
     }
+
+    public async Task DeletePlayerStats(int id)
+    {
+        var ps = await tunaLeagueContext.PlayerStats.FirstOrDefaultAsync(p => p.Id == id);
+        if (ps == null)
+            throw new Exception("Player stats not found");
+
+        tunaLeagueContext.PlayerStats.Remove(ps);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
+
+    public async Task DeletePlayer(int id)
+    {
+        var player = await tunaLeagueContext.Players
+            .Include(p => p.PlayerStats)
+            .Include(p => p.Goals)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (player == null)
+            throw new Exception("Player not found");
+
+        // Remove related player stats
+        var stats = tunaLeagueContext.PlayerStats.Where(ps => ps.PlayerId == id);
+        tunaLeagueContext.PlayerStats.RemoveRange(stats);
+
+        // Remove related goals
+        var goals = tunaLeagueContext.Goals.Where(g => g.PlayerId == id);
+        tunaLeagueContext.Goals.RemoveRange(goals);
+
+        // Remove player
+        tunaLeagueContext.Players.Remove(player);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
 }
 

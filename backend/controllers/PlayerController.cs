@@ -147,4 +147,36 @@ public class PlayerController : ControllerBase
             return BadRequest(ex.ToClientMessage());
         }
     }
+
+    [HttpDelete("players/player-stats/{id}")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerOperation(Summary = "Delete player stats", Description = "Deletes a player stats record by id.")]
+    public async Task<ActionResult> DeletePlayerStats(int id)
+    {
+        try
+        {
+            await playerService.DeletePlayerStats(id);
+            return Ok("Player stats deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.ToClientMessage());
+        }
+    }
+
+    [HttpDelete("players/{id}")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerOperation(Summary = "Delete player", Description = "Deletes a player and related records by id.")]
+    public async Task<ActionResult> DeletePlayer(int id)
+    {
+        try
+        {
+            await playerService.DeletePlayer(id);
+            return Ok("Player deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.ToClientMessage());
+        }
+    }
 }

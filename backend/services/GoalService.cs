@@ -128,4 +128,16 @@ public class GoalService : IGoalService
         tunaLeagueContext.Goals.Add(goal);
         await tunaLeagueContext.SaveChangesAsync();
     }
+
+    public async Task DeleteGoal(int id)
+    {
+        var goal = await tunaLeagueContext.Goals.FirstOrDefaultAsync(g => g.Id == id);
+        if (goal == null)
+        {
+            throw new Exception("Goal not found");
+        }
+
+        tunaLeagueContext.Goals.Remove(goal);
+        await tunaLeagueContext.SaveChangesAsync();
+    }
 }

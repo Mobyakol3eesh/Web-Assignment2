@@ -4,4 +4,6 @@ public interface ICoachService
     Task<CoachReadDto> GetCoachDetailsById(int id);
     Task AddCoach(CreateCoachDto dto);
     Task UpdateCoach(int id, UpdateCoachDto dto);
+
+    Task DeleteCoach(int id);
 }
