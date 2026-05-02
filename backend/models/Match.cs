@@ -19,5 +19,6 @@ public class Match
     public int AwayTeamScore { get; set; }
 
     public IEnumerable<Goal> Goals { get; set; } = new List<Goal>();
+    public IEnumerable<PlayerStats> PlayerStats { get; set; } = new List<PlayerStats>();
 
 }

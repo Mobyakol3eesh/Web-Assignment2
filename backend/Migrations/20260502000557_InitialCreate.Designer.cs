@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Tuna_SoccerLeague.Migrations
 {
     [DbContext(typeof(TunaLeagueContext))]
-    [Migration("20260501184643_InitialCreate")]
+    [Migration("20260502000557_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -396,7 +396,7 @@ namespace Tuna_SoccerLeague.Migrations
 
                     b.HasIndex("MatchId");
 
-                    b.HasIndex("PlayerId")
+                    b.HasIndex("PlayerId", "MatchId")
                         .IsUnique();
 
                     b.ToTable("PlayerStats");
@@ -546,14 +546,14 @@ namespace Tuna_SoccerLeague.Migrations
             modelBuilder.Entity("PlayerStats", b =>
                 {
                     b.HasOne("Match", "Match")
-                        .WithMany()
+                        .WithMany("PlayerStats")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Player", "Player")
-                        .WithOne("PlayerStats")
-                        .HasForeignKey("PlayerStats", "PlayerId")
+                        .WithMany("PlayerStats")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -565,6 +565,8 @@ namespace Tuna_SoccerLeague.Migrations
             modelBuilder.Entity("Match", b =>
                 {
                     b.Navigation("Goals");
+
+                    b.Navigation("PlayerStats");
                 });
 
             modelBuilder.Entity("Player", b =>

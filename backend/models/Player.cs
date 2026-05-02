@@ -13,7 +13,7 @@ public class Player
     public int JerseyNumber { get; set; }
     
 
-    public PlayerStats? PlayerStats { get; set; }
+    public IEnumerable<PlayerStats> PlayerStats { get; set; } = new List<PlayerStats>();
     public IEnumerable<Goal> Goals { get; set; } = new List<Goal>();
     public required int TeamId { get; set; }
     public  Team? Team { get; set; }

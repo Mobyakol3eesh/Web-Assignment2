@@ -52,7 +52,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] LoginDto dto, [FromQuery] string role = "User")
+    public async Task<ActionResult> Register([FromBody] LoginDto dto)
     {
         if (!ModelState.IsValid)
         {
@@ -61,8 +61,9 @@ public class AuthController : ControllerBase
 
         try
         {
-            await _userService.RegisterUser(dto.Username, dto.Password, role);
-            return Ok(new { message = "User registered", role });
+            const string defaultRole = "User";
+            await _userService.RegisterUser(dto.Username, dto.Password, defaultRole);
+            return Ok(new { message = "User registered", role = defaultRole });
         }
         catch (Exception ex)
         {
@@ -75,6 +76,22 @@ public class AuthController : ControllerBase
     {
         await _userService.LogoutUser();
         return Ok(new { message = "Logged out" });
+    }
+
+    [HttpGet("me")]
+    [Authorize]
+    public async Task<ActionResult> Me()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault() ?? "User";
+
+        return Ok(new { username = user.UserName, role });
     }
 
   

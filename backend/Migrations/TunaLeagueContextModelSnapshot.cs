@@ -393,7 +393,7 @@ namespace Tuna_SoccerLeague.Migrations
 
                     b.HasIndex("MatchId");
 
-                    b.HasIndex("PlayerId")
+                    b.HasIndex("PlayerId", "MatchId")
                         .IsUnique();
 
                     b.ToTable("PlayerStats");
@@ -543,14 +543,14 @@ namespace Tuna_SoccerLeague.Migrations
             modelBuilder.Entity("PlayerStats", b =>
                 {
                     b.HasOne("Match", "Match")
-                        .WithMany()
+                        .WithMany("PlayerStats")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Player", "Player")
-                        .WithOne("PlayerStats")
-                        .HasForeignKey("PlayerStats", "PlayerId")
+                        .WithMany("PlayerStats")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -562,6 +562,8 @@ namespace Tuna_SoccerLeague.Migrations
             modelBuilder.Entity("Match", b =>
                 {
                     b.Navigation("Goals");
+
+                    b.Navigation("PlayerStats");
                 });
 
             modelBuilder.Entity("Player", b =>

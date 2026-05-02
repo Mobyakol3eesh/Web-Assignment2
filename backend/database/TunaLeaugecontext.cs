@@ -47,5 +47,21 @@ public class TunaLeagueContext : IdentityDbContext<ApplicationUser>
             .WithMany(t => t.Goals)
             .HasForeignKey(g => g.TeamId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PlayerStats>()
+            .HasOne(ps => ps.Player)
+            .WithMany(p => p.PlayerStats)
+            .HasForeignKey(ps => ps.PlayerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PlayerStats>()
+            .HasOne(ps => ps.Match)
+            .WithMany(m => m.PlayerStats)
+            .HasForeignKey(ps => ps.MatchId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PlayerStats>()
+            .HasIndex(ps => new { ps.PlayerId, ps.MatchId })
+            .IsUnique();
     }
 }

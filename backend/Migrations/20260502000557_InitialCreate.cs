@@ -454,9 +454,9 @@ namespace Tuna_SoccerLeague.Migrations
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerStats_PlayerId",
+                name: "IX_PlayerStats_PlayerId_MatchId",
                 table: "PlayerStats",
-                column: "PlayerId",
+                columns: new[] { "PlayerId", "MatchId" },
                 unique: true);
         }
 

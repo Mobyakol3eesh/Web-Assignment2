@@ -29,7 +29,12 @@ internal static class ServiceCollectionExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSwagger", builder =>
-                builder.WithOrigins("http://localhost:5095", "https://localhost:7070", "http://localhost:3000")
+                builder.WithOrigins(
+                           "http://localhost:5095",
+                           "https://localhost:7070",
+                           "http://localhost:3000",
+                           "http://localhost:5173",
+                           "http://127.0.0.1:5173")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials());
