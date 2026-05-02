@@ -16,9 +16,19 @@ export const Login: React.FC = () => {
       await auth.login(username, password)
       navigate('/')
     } catch (err) {
-      const axiosErr = err as AxiosError
-      const msg = axiosErr.response?.data ?? ''
-      setError('Login failed ' + msg)
+      const axiosErr = err as AxiosError<any>
+      let msg = ''
+
+      const data = axiosErr.response?.data
+      if (typeof data === 'string') {
+        msg = data
+      } else if (data?.errors) {
+        msg = Object.values(data.errors).flat().join(', ')
+      } else if (data?.title) {
+        msg = data.title
+      }
+
+      setError('Login failed. ' + msg)
     }
   }
 

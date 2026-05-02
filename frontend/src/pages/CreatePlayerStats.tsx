@@ -42,9 +42,19 @@ export const CreatePlayerStats: React.FC = () => {
       setSuccess('Player stats created successfully.')
       setForm({ ...emptyForm })
     } catch (err) {
-        const axiosErr = err as AxiosError;
-        const msg = axiosErr.response?.data ?? ''
-      setError('Unable to create player stats. Check the form values and try again.' + msg)
+      const axiosErr = err as AxiosError<any>
+      let msg = ''
+
+      const data = axiosErr.response?.data
+      if (typeof data === 'string') {
+        msg = data
+      } else if (data?.errors) {
+        msg = Object.values(data.errors).flat().join(', ')
+      } else if (data?.title) {
+        msg = data.title
+      }
+
+      setError('Unable to create player stats. Check the form values and try again. ' + msg)
     } finally {
       setLoading(false)
     }

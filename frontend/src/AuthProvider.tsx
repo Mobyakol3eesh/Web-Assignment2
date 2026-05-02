@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import api from './services/api'
+import type { AxiosError } from 'axios'
 
 type AuthContextType = {
     isAuthenticated: boolean
@@ -31,6 +32,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsAuthenticated(true)
       setRole(res.data?.role ?? 'User')
     } catch (err) {
+      const axiosErr = err as AxiosError<any>
+      let msg = ''
+
+      const data = axiosErr.response?.data
+      if (typeof data === 'string') {
+        msg = data
+      } else if (data?.errors) {
+        msg = Object.values(data.errors).flat().join(', ')
+      } else if (data?.title) {
+        msg = data.title
+      }
+
+      void msg
       setIsAuthenticated(false)
       setRole(null)
     } finally {

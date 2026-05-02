@@ -43,9 +43,19 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
       setPoints(0)
       load()
     } catch (err) {
-      const axiosErr = err as AxiosError;
-      const msg = axiosErr.response?.data ?? ''
-      setError('Unable to save team. Try again.' + msg)
+      const axiosErr = err as AxiosError<any>
+      let msg = ''
+
+      const data = axiosErr.response?.data
+      if (typeof data === 'string') {
+        msg = data
+      } else if (data?.errors) {
+        msg = Object.values(data.errors).flat().join(', ')
+      } else if (data?.title) {
+        msg = data.title
+      }
+
+      setError('Unable to save team. Try again. ' + msg)
     } finally {
       setSaving(false)
     }
@@ -57,9 +67,19 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
       await api.delete(`/teams/${id}`)
       setTeams((s) => s.filter((t) => t.id !== id))
     } catch (err) {
-      const axiosErr = err as AxiosError;
-      const msg = axiosErr.response?.data ?? ''
-      alert('Delete failed: ' + msg)
+      const axiosErr = err as AxiosError<any>
+      let msg = ''
+
+      const data = axiosErr.response?.data
+      if (typeof data === 'string') {
+        msg = data
+      } else if (data?.errors) {
+        msg = Object.values(data.errors).flat().join(', ')
+      } else if (data?.title) {
+        msg = data.title
+      }
+
+      alert('Delete failed. ' + msg)
     }
   }
 
