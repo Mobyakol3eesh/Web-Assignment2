@@ -76,7 +76,7 @@ export const Teams: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) =>
               onChange={(e) => setPoints(Number(e.target.value))}
               placeholder="Points"
             />
-            <button type="submit">Save</button>
+            <button type="button" onClick={(e) => { e.preventDefault(); saveEdit(e as any) }}>Save</button>
             <button
               type="button"
               onClick={() => {

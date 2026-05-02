@@ -94,7 +94,7 @@ export const Matches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input type="number" value={form.homeTeamScore} onChange={(e) => setForm({ ...form, homeTeamScore: Number(e.target.value) })} />
             <label>Away team score</label>
             <input type="number" value={form.awayTeamScore} onChange={(e) => setForm({ ...form, awayTeamScore: Number(e.target.value) })} />
-            <button type="submit">Save Match</button>
+            <button type="button" onClick={(e) => { e.preventDefault(); saveEdit(e as any) }}>Save Match</button>
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
             </button>

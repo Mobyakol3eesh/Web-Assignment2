@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
 
-type Player = { id: number; name: string; age: number; position: string; marketValue: number; teamName: string }
+type Player = { id: number; name: string; age: number; position: string; marketValue: number; teamName: string , teamID: number}
 
-const emptyForm = { name: '', age: 18, position: '', marketValue: 0, teamName: '' }
+const emptyForm = { name: '', age: 18, position: '', marketValue: 0, teamName: '', teamID: 0 }
 
 export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) => {
   const [players, setPlayers] = useState<Player[]>([])
@@ -21,8 +21,7 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
 
   useEffect(() => { load() }, [])
 
-  const saveEdit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const saveEdit = async () => {
     if (!editing) return
     setSaving(true)
     setError(null)
@@ -48,6 +47,7 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
       position: p.position,
       marketValue: p.marketValue,
       teamName: p.teamName ?? '',
+      teamID: p.teamID ?? 0,
     })
   }
 
@@ -78,9 +78,9 @@ export const Players: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} placeholder="Position" />
             <label>Market value</label>
             <input type="number" value={form.marketValue} onChange={(e) => setForm({ ...form, marketValue: Number(e.target.value) })} />
-            <label>Team Name</label>
-            <input value={form.teamName} onChange={(e) => setForm({ ...form, teamName: e.target.value })} placeholder="Team Name" />
-            <button type="submit">Save Player</button>
+            <label>Team ID</label>
+            <input type="number" value={form.teamID} onChange={(e) => setForm({ ...form, teamID: Number(e.target.value) })} placeholder="Team ID" />
+            <button type="button" onClick={(e) => { e.preventDefault(); saveEdit(e as any) }}>Save Player</button>
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
             </button>

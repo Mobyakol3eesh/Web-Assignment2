@@ -93,7 +93,7 @@ export const PlayerStats: React.FC<{ readOnly?: boolean }> = ({ readOnly = false
             <input type="number" value={updateForm.passesCompleted} onChange={(e) => setUpdateForm({ ...updateForm, passesCompleted: Number(e.target.value) })} />
             <label>Score</label>
             <input type="number" value={updateForm.score} onChange={(e) => setUpdateForm({ ...updateForm, score: Number(e.target.value) })} />
-            <button type="submit">Save Stats</button>
+            <button type="button" onClick={(e) => { e.preventDefault(); submit(e as any) }}>Save Stats</button>
             <button type="button" onClick={() => { setEditing(null); setUpdateForm({ ...emptyUpdate }) }}>
               Cancel
             </button>

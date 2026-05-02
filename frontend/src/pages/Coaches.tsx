@@ -78,7 +78,7 @@ export const Coaches: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) 
             <input type="number" value={form.experienceYrs} onChange={(e) => setForm({ ...form, experienceYrs: Number(e.target.value) })} />
             <label>Team ID</label>
             <input type="number" value={form.teamId} onChange={(e) => setForm({ ...form, teamId: Number(e.target.value) })} />
-            <button type="submit">Save Coach</button>
+            <button type="button" onClick={(e) => { e.preventDefault(); saveEdit(e as any) }}>Save Coach</button>
             <button type="button" onClick={() => { setEditing(null); setForm({ ...emptyForm }) }}>
               Cancel
             </button>
