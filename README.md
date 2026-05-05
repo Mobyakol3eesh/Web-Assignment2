@@ -124,9 +124,9 @@ The login response returns:
 
 Auth uses an HTTP cookie set on login. Browsers/clients send the cookie automatically on protected endpoints.
 
-Demo users (hardcoded in `AuthController`):
+Demo admin (stored in database automatically):
 - Admin: `admin` / `admin123`
-- User: `user` / `user123`
+
 
 ## API Routes Used
 
