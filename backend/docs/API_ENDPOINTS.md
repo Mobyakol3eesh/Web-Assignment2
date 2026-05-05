@@ -9,16 +9,12 @@ This document describes the currently available HTTP API endpoints.
 
 ## Authentication and Authorization
 
-1. Call `POST /auth/login` to get an `accessToken`.
-2. Send the token on protected endpoints:
-
-```http
-Authorization: Bearer <accessToken>
-```
+1. Call `POST /auth/login` to set the auth cookie.
+2. The browser/client sends the cookie on protected endpoints automatically.
 
 Role model:
 - `User`: read endpoints (`GET`)
-- `Admin`: write endpoints (`POST`, `PUT`)
+- `Admin`: write endpoints (`POST`, `PUT`, `DELETE`)
 
 ## Auth
 
@@ -40,7 +36,7 @@ Role model:
 
 ```json
 {
-  "accessToken": "<jwt>",
+  "message": "Logged in, auth cookie set.",
   "role": "Admin"
 }
 ```
@@ -48,6 +44,32 @@ Role model:
 Demo credentials:
 - Admin: `admin` / `admin123`
 - User: `user` / `user123`
+
+### Register
+
+- Method: `POST`
+- Path: `/auth/register`
+- Auth: none (`AllowAnonymous`)
+- Request body:
+
+```json
+{
+  "username": "newuser",
+  "password": "secret123"
+}
+```
+
+### Logout
+
+- Method: `POST`
+- Path: `/auth/logout`
+- Auth: cookie (if logged in)
+
+### Me
+
+- Method: `GET`
+- Path: `/auth/me`
+- Auth: cookie
 
 ## Teams
 
@@ -108,6 +130,12 @@ Demo credentials:
 }
 ```
 
+### Delete team
+
+- Method: `DELETE`
+- Path: `/teams/{id}`
+- Auth: `Admin`
+
 ## Players
 
 ### Get all players
@@ -156,6 +184,12 @@ Demo credentials:
 }
 ```
 
+### Delete player
+
+- Method: `DELETE`
+- Path: `/players/{id}`
+- Auth: `Admin`
+
 ## Player Stats
 
 ### Get all player stats
@@ -181,7 +215,10 @@ Demo credentials:
 {
   "goals": 2,
   "assists": 1,
-  "appearances": 1,
+  "shotsOnTarget": 4,
+  "touches": 38,
+  "passesCompleted": 22,
+  "score": 7.5,
   "playerId": 1,
   "matchId": 1
 }
@@ -198,9 +235,18 @@ Demo credentials:
 {
   "goals": 3,
   "assists": 1,
-  "appearances": 2
+  "shotsOnTarget": 5,
+  "touches": 40,
+  "passesCompleted": 25,
+  "score": 8.1
 }
 ```
+
+### Delete player stats
+
+- Method: `DELETE`
+- Path: `/players/player-stats/{id}`
+- Auth: `Admin`
 
 ## Coaches
 
@@ -247,6 +293,12 @@ Demo credentials:
   "teamId": 1
 }
 ```
+
+### Delete coach
+
+- Method: `DELETE`
+- Path: `/coaches/{id}`
+- Auth: `Admin`
 
 ## Matches
 
@@ -297,6 +349,59 @@ Demo credentials:
   "awayTeamScore": 2
 }
 ```
+
+### Delete match
+
+- Method: `DELETE`
+- Path: `/matches/{id}`
+- Auth: `Admin`
+
+## Goals
+
+### Get all goals
+
+- Method: `GET`
+- Path: `/goals`
+- Auth: `User`
+
+### Get goal by id
+
+- Method: `GET`
+- Path: `/goals/{id}`
+- Auth: `User`
+
+### Get goals by match
+
+- Method: `GET`
+- Path: `/goals/match/{matchId}`
+- Auth: `User`
+
+### Get goals by team
+
+- Method: `GET`
+- Path: `/goals/team/{teamId}`
+- Auth: `User`
+
+### Create goal
+
+- Method: `POST`
+- Path: `/goals`
+- Auth: `Admin`
+- Request body (`CreateGoalDto`):
+
+```json
+{
+  "playerId": 1,
+  "matchId": 1,
+  "teamId": 1
+}
+```
+
+### Delete goal
+
+- Method: `DELETE`
+- Path: `/goals/{id}`
+- Auth: `Admin`
 
 ## Notes
 
