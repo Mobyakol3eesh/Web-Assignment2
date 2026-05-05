@@ -65,11 +65,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const register = async (username: string, password: string) => {
-    const res = await api.post('/auth/register', { username, password })
-    if (res.status === 200) {
-      setIsAuthenticated(true)
-      setRole(res.data?.role ?? 'User')
-    }
+    await api.post('/auth/register', { username, password })
+    
   }
 
   const logout = async () => {

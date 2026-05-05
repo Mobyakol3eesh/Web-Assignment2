@@ -14,7 +14,7 @@ export const Register: React.FC = () => {
     e.preventDefault()
     try {
       await auth.register(username, password)
-      navigate('/')
+      navigate('/login')
     } catch (err) {
       const axiosErr = err as AxiosError<any>
       let msg = ''
@@ -31,7 +31,7 @@ export const Register: React.FC = () => {
       setError('Register failed. ' + msg)
     }
   }
-
+  
   if (auth.isAuthenticated) {
     return <Navigate to="/league" replace />
   }
